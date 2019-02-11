@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "gitCompany": "",
+    "baseName": "fluxSdsi",
+    "packageName": "fr.gouv.culture.sdsi.reseau.flux",
+    "packageFolder": "fr/gouv/culture/sdsi/reseau/flux",
+    "serverPort": 8080,
+    "serviceDiscoveryType": false,
+    "authenticationType": "jwt",
+    "uaaBaseName": "../uaa",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "enableSwaggerCodegen": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "enableTranslation": false,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "clientFramework": "angularX",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "5.8.1",
+    "jwtSecretKey": "YjNmNWZhNjBlNjU4OTBiYzA3MGQ1YjA3ODc3NmY2OWUxYzE3YTJlOGQ3YWQ0NjEwYjUzMTA1MDRhNGY3ZTA1YTRlN2VmNzAyNDk5OTJlNTcxZTJlN2M2Y2I2NTIwNDU0ZDhlMTVkMjY5NWVkODUyMjYyNWVjMGNjY2Y3NTZmY2Q=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": []
+  },
+  "git-provider": "GitHub",
+  "git-company": "plec",
+  "repository-name": "fluxSdsi"
+}
