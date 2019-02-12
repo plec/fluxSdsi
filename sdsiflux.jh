@@ -1,0 +1,79 @@
+
+
+entity RefEnvironnement {
+	code String required,
+    libelle String required
+}
+
+entity RefSite {
+	code String required,
+    libelle String required
+}
+entity RefDomaine {
+	code String required,
+    libelle String required
+}
+enum TypeFlux {
+    TCP, UDP, TCP_UDP
+  }
+entity RefFlux {
+	code String required,
+    type TypeFlux required,
+    libelle String required
+}
+entity RefTypeFonction {
+	code String required,
+	libelle String required
+}
+entity RefFonction {
+	code String required,
+	codeZone String required,
+    codeFonction String required,
+    libelle String required
+}
+
+entity RefZone {
+	code String required,
+    libelle String required
+}
+entity RefNumero {
+	code String required,
+    libelle String required
+}
+
+entity Flux {
+    environnement String required,
+    type String required,
+    sourceIP String required,
+    sourcePort String,
+    sourceZone String required,
+    destIP String required,
+    destPort String,
+    destZone String required,
+}
+
+relationship OneToMany {
+	RefEnvironnement{code} to Flux{environnement}
+}
+relationship OneToMany {
+	RefZone{code} to Flux{sourceZone}
+}
+relationship OneToMany {
+	RefZone{code} to Flux{destZone}
+}
+relationship OneToMany {
+	RefFlux{code} to Flux{type}
+}
+relationship OneToMany {
+	RefFonction{codeZone} to RefZone{code}
+}
+relationship OneToMany {
+	RefTypeFonction{code} to RefFonction{codeFonction}
+}
+
+
+dto all with mapstruct except TypeFlux
+
+paginate all with pagination TypeFlux
+
+service all with serviceImpl TypeFlux
