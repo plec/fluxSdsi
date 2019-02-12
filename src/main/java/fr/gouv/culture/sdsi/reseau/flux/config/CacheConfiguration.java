@@ -38,6 +38,20 @@ public class CacheConfiguration {
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironnement.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironnement.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefSite.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefDomaine.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefFlux.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefFlux.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFonction.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFonction.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefFonction.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefFonction.class.getName() + ".codeZones", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefZone.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefZone.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefNumero.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.Flux.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

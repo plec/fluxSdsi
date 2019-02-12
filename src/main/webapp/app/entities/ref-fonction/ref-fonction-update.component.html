@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-ref-fonction-heading">Create or edit a Ref Fonction</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!refFonction.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="refFonction.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                        [(ngModel)]="refFonction.code" required/>
+                    <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.code?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeZone">Code Zone</label>
+                    <input type="text" class="form-control" name="codeZone" id="field_codeZone"
+                        [(ngModel)]="refFonction.codeZone" required/>
+                    <div [hidden]="!(editForm.controls.codeZone?.dirty && editForm.controls.codeZone?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.codeZone?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeFonction">Code Fonction</label>
+                    <input type="text" class="form-control" name="codeFonction" id="field_codeFonction"
+                        [(ngModel)]="refFonction.codeFonction" required/>
+                    <div [hidden]="!(editForm.controls.codeFonction?.dirty && editForm.controls.codeFonction?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.codeFonction?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_libelle">Libelle</label>
+                    <input type="text" class="form-control" name="libelle" id="field_libelle"
+                        [(ngModel)]="refFonction.libelle" required/>
+                    <div [hidden]="!(editForm.controls.libelle?.dirty && editForm.controls.libelle?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.libelle?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeFonction">Code Fonction</label>
+                    <select class="form-control" id="field_codeFonction" name="codeFonction" [(ngModel)]="refFonction.codeFonctionId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refTypeFonctionOption.id" *ngFor="let refTypeFonctionOption of reftypefonctions; trackBy: trackRefTypeFonctionById">{{refTypeFonctionOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

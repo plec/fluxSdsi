@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="flux">
+            <h2><span>Flux</span> {{flux.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Environnement</span></dt>
+                <dd>
+                    <span>{{flux.environnement}}</span>
+                </dd>
+                <dt><span>Type</span></dt>
+                <dd>
+                    <span>{{flux.type}}</span>
+                </dd>
+                <dt><span>Source IP</span></dt>
+                <dd>
+                    <span>{{flux.sourceIP}}</span>
+                </dd>
+                <dt><span>Source Port</span></dt>
+                <dd>
+                    <span>{{flux.sourcePort}}</span>
+                </dd>
+                <dt><span>Source Zone</span></dt>
+                <dd>
+                    <span>{{flux.sourceZone}}</span>
+                </dd>
+                <dt><span>Dest IP</span></dt>
+                <dd>
+                    <span>{{flux.destIP}}</span>
+                </dd>
+                <dt><span>Dest Port</span></dt>
+                <dd>
+                    <span>{{flux.destPort}}</span>
+                </dd>
+                <dt><span>Dest Zone</span></dt>
+                <dd>
+                    <span>{{flux.destZone}}</span>
+                </dd>
+                <dt><span>Environnement</span></dt>
+                <dd>
+                    <div *ngIf="flux.environnementId">
+                        <a [routerLink]="['/ref-environnement', flux.environnementId, 'view']">{{flux.environnementId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Source Zone</span></dt>
+                <dd>
+                    <div *ngIf="flux.sourceZoneId">
+                        <a [routerLink]="['/ref-zone', flux.sourceZoneId, 'view']">{{flux.sourceZoneId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Dest Zone</span></dt>
+                <dd>
+                    <div *ngIf="flux.destZoneId">
+                        <a [routerLink]="['/ref-zone', flux.destZoneId, 'view']">{{flux.destZoneId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Type</span></dt>
+                <dd>
+                    <div *ngIf="flux.typeId">
+                        <a [routerLink]="['/ref-flux', flux.typeId, 'view']">{{flux.typeId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/flux', flux.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

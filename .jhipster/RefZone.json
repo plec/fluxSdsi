@@ -1,0 +1,49 @@
+{
+    "name": "RefZone",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "libelle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "flux",
+            "otherEntityRelationshipName": "sourceZone"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "flux",
+            "otherEntityRelationshipName": "destZone"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "code",
+            "otherEntityName": "refFonction",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "codeZone"
+        }
+    ],
+    "changelogDate": "20190212144239",
+    "entityTableName": "ref_zone",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,57 @@
+{
+    "name": "RefFonction",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "codeZone",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "codeFonction",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "libelle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "codeZone",
+            "otherEntityName": "refZone",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "codeFonction",
+            "otherEntityName": "refTypeFonction",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        }
+    ],
+    "changelogDate": "20190212144238",
+    "entityTableName": "ref_fonction",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
