@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefSiteService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefSite;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefSiteRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefSiteDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefSiteMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class RefSiteServiceImpl implements RefSiteService {
 
     private final RefSiteRepository refSiteRepository;
 
-    private final RefSiteMapper refSiteMapper;
-
-    public RefSiteServiceImpl(RefSiteRepository refSiteRepository, RefSiteMapper refSiteMapper) {
+    public RefSiteServiceImpl(RefSiteRepository refSiteRepository) {
         this.refSiteRepository = refSiteRepository;
-        this.refSiteMapper = refSiteMapper;
     }
 
     /**
      * Save a refSite.
      *
-     * @param refSiteDTO the entity to save
+     * @param refSite the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefSiteDTO save(RefSiteDTO refSiteDTO) {
-        log.debug("Request to save RefSite : {}", refSiteDTO);
-        RefSite refSite = refSiteMapper.toEntity(refSiteDTO);
-        refSite = refSiteRepository.save(refSite);
-        return refSiteMapper.toDto(refSite);
+    public RefSite save(RefSite refSite) {
+        log.debug("Request to save RefSite : {}", refSite);
+        return refSiteRepository.save(refSite);
     }
 
     /**
@@ -55,10 +48,9 @@ public class RefSiteServiceImpl implements RefSiteService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefSiteDTO> findAll(Pageable pageable) {
+    public Page<RefSite> findAll(Pageable pageable) {
         log.debug("Request to get all RefSites");
-        return refSiteRepository.findAll(pageable)
-            .map(refSiteMapper::toDto);
+        return refSiteRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class RefSiteServiceImpl implements RefSiteService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefSiteDTO> findOne(Long id) {
+    public Optional<RefSite> findOne(Long id) {
         log.debug("Request to get RefSite : {}", id);
-        return refSiteRepository.findById(id)
-            .map(refSiteMapper::toDto);
+        return refSiteRepository.findById(id);
     }
 
     /**

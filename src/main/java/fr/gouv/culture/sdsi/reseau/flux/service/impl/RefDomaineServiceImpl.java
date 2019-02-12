@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefDomaineService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefDomaine;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefDomaineRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefDomaineDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefDomaineMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class RefDomaineServiceImpl implements RefDomaineService {
 
     private final RefDomaineRepository refDomaineRepository;
 
-    private final RefDomaineMapper refDomaineMapper;
-
-    public RefDomaineServiceImpl(RefDomaineRepository refDomaineRepository, RefDomaineMapper refDomaineMapper) {
+    public RefDomaineServiceImpl(RefDomaineRepository refDomaineRepository) {
         this.refDomaineRepository = refDomaineRepository;
-        this.refDomaineMapper = refDomaineMapper;
     }
 
     /**
      * Save a refDomaine.
      *
-     * @param refDomaineDTO the entity to save
+     * @param refDomaine the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefDomaineDTO save(RefDomaineDTO refDomaineDTO) {
-        log.debug("Request to save RefDomaine : {}", refDomaineDTO);
-        RefDomaine refDomaine = refDomaineMapper.toEntity(refDomaineDTO);
-        refDomaine = refDomaineRepository.save(refDomaine);
-        return refDomaineMapper.toDto(refDomaine);
+    public RefDomaine save(RefDomaine refDomaine) {
+        log.debug("Request to save RefDomaine : {}", refDomaine);
+        return refDomaineRepository.save(refDomaine);
     }
 
     /**
@@ -55,10 +48,9 @@ public class RefDomaineServiceImpl implements RefDomaineService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefDomaineDTO> findAll(Pageable pageable) {
+    public Page<RefDomaine> findAll(Pageable pageable) {
         log.debug("Request to get all RefDomaines");
-        return refDomaineRepository.findAll(pageable)
-            .map(refDomaineMapper::toDto);
+        return refDomaineRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class RefDomaineServiceImpl implements RefDomaineService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefDomaineDTO> findOne(Long id) {
+    public Optional<RefDomaine> findOne(Long id) {
         log.debug("Request to get RefDomaine : {}", id);
-        return refDomaineRepository.findById(id)
-            .map(refDomaineMapper::toDto);
+        return refDomaineRepository.findById(id);
     }
 
     /**

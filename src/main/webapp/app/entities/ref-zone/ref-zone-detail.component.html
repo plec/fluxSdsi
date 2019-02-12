@@ -15,8 +15,8 @@
                 </dd>
                 <dt><span>Ref Fonction</span></dt>
                 <dd>
-                    <div *ngIf="refZone.refFonctionId">
-                        <a [routerLink]="['/ref-fonction', refZone.refFonctionId, 'view']">{{refZone.refFonctionId}}</a>
+                    <div *ngIf="refZone.refFonction">
+                        <a [routerLink]="['/ref-fonction', refZone.refFonction?.id, 'view']">{{refZone.refFonction?.id}}</a>
                     </div>
                 </dd>
             </dl>

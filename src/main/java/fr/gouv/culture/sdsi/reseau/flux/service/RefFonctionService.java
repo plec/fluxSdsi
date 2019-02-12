@@ -1,6 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.service;
 
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFonctionDTO;
+import fr.gouv.culture.sdsi.reseau.flux.domain.RefFonction;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ public interface RefFonctionService {
     /**
      * Save a refFonction.
      *
-     * @param refFonctionDTO the entity to save
+     * @param refFonction the entity to save
      * @return the persisted entity
      */
-    RefFonctionDTO save(RefFonctionDTO refFonctionDTO);
+    RefFonction save(RefFonction refFonction);
 
     /**
      * Get all the refFonctions.
@@ -26,7 +26,7 @@ public interface RefFonctionService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<RefFonctionDTO> findAll(Pageable pageable);
+    Page<RefFonction> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface RefFonctionService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<RefFonctionDTO> findOne(Long id);
+    Optional<RefFonction> findOne(Long id);
 
     /**
      * Delete the "id" refFonction.

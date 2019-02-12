@@ -34,7 +34,7 @@
     ],
     "changelogDate": "20190212144236",
     "entityTableName": "ref_flux",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

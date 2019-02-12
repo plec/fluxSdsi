@@ -26,7 +26,7 @@
     ],
     "changelogDate": "20190212144233",
     "entityTableName": "ref_environnement",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

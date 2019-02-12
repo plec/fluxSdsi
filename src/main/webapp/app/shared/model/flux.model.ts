@@ -1,3 +1,7 @@
+import { IRefEnvironnement } from 'app/shared/model/ref-environnement.model';
+import { IRefFlux } from 'app/shared/model/ref-flux.model';
+import { IRefZone } from 'app/shared/model/ref-zone.model';
+
 export interface IFlux {
     id?: number;
     environnement?: string;
@@ -8,9 +12,9 @@ export interface IFlux {
     destIP?: string;
     destPort?: string;
     destZone?: string;
-    refEnvironnementId?: number;
-    refFluxId?: number;
-    refZoneId?: number;
+    refEnvironnement?: IRefEnvironnement;
+    refFlux?: IRefFlux;
+    refZone?: IRefZone;
 }
 
 export class Flux implements IFlux {
@@ -24,8 +28,8 @@ export class Flux implements IFlux {
         public destIP?: string,
         public destPort?: string,
         public destZone?: string,
-        public refEnvironnementId?: number,
-        public refFluxId?: number,
-        public refZoneId?: number
+        public refEnvironnement?: IRefEnvironnement,
+        public refFlux?: IRefFlux,
+        public refZone?: IRefZone
     ) {}
 }

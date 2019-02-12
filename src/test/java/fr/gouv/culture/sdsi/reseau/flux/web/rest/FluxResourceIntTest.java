@@ -5,8 +5,6 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.Flux;
 import fr.gouv.culture.sdsi.reseau.flux.repository.FluxRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.FluxService;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.FluxDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.FluxMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -69,9 +67,6 @@ public class FluxResourceIntTest {
 
     @Autowired
     private FluxRepository fluxRepository;
-
-    @Autowired
-    private FluxMapper fluxMapper;
 
     @Autowired
     private FluxService fluxService;
@@ -137,10 +132,9 @@ public class FluxResourceIntTest {
         int databaseSizeBeforeCreate = fluxRepository.findAll().size();
 
         // Create the Flux
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isCreated());
 
         // Validate the Flux in the database
@@ -164,12 +158,11 @@ public class FluxResourceIntTest {
 
         // Create the Flux with an existing ID
         flux.setId(1L);
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         // Validate the Flux in the database
@@ -185,11 +178,10 @@ public class FluxResourceIntTest {
         flux.setEnvironnement(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -204,11 +196,10 @@ public class FluxResourceIntTest {
         flux.setType(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -223,11 +214,10 @@ public class FluxResourceIntTest {
         flux.setSourceIP(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -242,11 +232,10 @@ public class FluxResourceIntTest {
         flux.setSourceZone(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -261,11 +250,10 @@ public class FluxResourceIntTest {
         flux.setDestIP(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -280,11 +268,10 @@ public class FluxResourceIntTest {
         flux.setDestZone(null);
 
         // Create the Flux, which fails.
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         restFluxMockMvc.perform(post("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         List<Flux> fluxList = fluxRepository.findAll();
@@ -345,7 +332,7 @@ public class FluxResourceIntTest {
     @Transactional
     public void updateFlux() throws Exception {
         // Initialize the database
-        fluxRepository.saveAndFlush(flux);
+        fluxService.save(flux);
 
         int databaseSizeBeforeUpdate = fluxRepository.findAll().size();
 
@@ -362,11 +349,10 @@ public class FluxResourceIntTest {
             .destIP(UPDATED_DEST_IP)
             .destPort(UPDATED_DEST_PORT)
             .destZone(UPDATED_DEST_ZONE);
-        FluxDTO fluxDTO = fluxMapper.toDto(updatedFlux);
 
         restFluxMockMvc.perform(put("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedFlux)))
             .andExpect(status().isOk());
 
         // Validate the Flux in the database
@@ -389,12 +375,11 @@ public class FluxResourceIntTest {
         int databaseSizeBeforeUpdate = fluxRepository.findAll().size();
 
         // Create the Flux
-        FluxDTO fluxDTO = fluxMapper.toDto(flux);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFluxMockMvc.perform(put("/api/fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(fluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(flux)))
             .andExpect(status().isBadRequest());
 
         // Validate the Flux in the database
@@ -406,7 +391,7 @@ public class FluxResourceIntTest {
     @Transactional
     public void deleteFlux() throws Exception {
         // Initialize the database
-        fluxRepository.saveAndFlush(flux);
+        fluxService.save(flux);
 
         int databaseSizeBeforeDelete = fluxRepository.findAll().size();
 
@@ -433,28 +418,5 @@ public class FluxResourceIntTest {
         assertThat(flux1).isNotEqualTo(flux2);
         flux1.setId(null);
         assertThat(flux1).isNotEqualTo(flux2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(FluxDTO.class);
-        FluxDTO fluxDTO1 = new FluxDTO();
-        fluxDTO1.setId(1L);
-        FluxDTO fluxDTO2 = new FluxDTO();
-        assertThat(fluxDTO1).isNotEqualTo(fluxDTO2);
-        fluxDTO2.setId(fluxDTO1.getId());
-        assertThat(fluxDTO1).isEqualTo(fluxDTO2);
-        fluxDTO2.setId(2L);
-        assertThat(fluxDTO1).isNotEqualTo(fluxDTO2);
-        fluxDTO1.setId(null);
-        assertThat(fluxDTO1).isNotEqualTo(fluxDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(fluxMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(fluxMapper.fromId(null)).isNull();
     }
 }

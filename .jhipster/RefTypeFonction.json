@@ -26,7 +26,7 @@
     ],
     "changelogDate": "20190212144237",
     "entityTableName": "ref_type_fonction",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

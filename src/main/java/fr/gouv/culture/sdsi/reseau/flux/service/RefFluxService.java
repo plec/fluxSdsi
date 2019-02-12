@@ -1,6 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.service;
 
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFluxDTO;
+import fr.gouv.culture.sdsi.reseau.flux.domain.RefFlux;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ public interface RefFluxService {
     /**
      * Save a refFlux.
      *
-     * @param refFluxDTO the entity to save
+     * @param refFlux the entity to save
      * @return the persisted entity
      */
-    RefFluxDTO save(RefFluxDTO refFluxDTO);
+    RefFlux save(RefFlux refFlux);
 
     /**
      * Get all the refFluxes.
@@ -26,7 +26,7 @@ public interface RefFluxService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<RefFluxDTO> findAll(Pageable pageable);
+    Page<RefFlux> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface RefFluxService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<RefFluxDTO> findOne(Long id);
+    Optional<RefFlux> findOne(Long id);
 
     /**
      * Delete the "id" refFlux.

@@ -34,9 +34,9 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_refFonction">Ref Fonction</label>
-                    <select class="form-control" id="field_refFonction" name="refFonction" [(ngModel)]="refZone.refFonctionId" >
+                    <select class="form-control" id="field_refFonction" name="refFonction" [(ngModel)]="refZone.refFonction" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="refFonctionOption.id" *ngFor="let refFonctionOption of reffonctions; trackBy: trackRefFonctionById">{{refFonctionOption.id}}</option>
+                        <option [ngValue]="refFonctionOption.id === refZone.refFonction?.id ? refZone.refFonction : refFonctionOption" *ngFor="let refFonctionOption of reffonctions; trackBy: trackRefFonctionById">{{refFonctionOption.id}}</option>
                     </select>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.service;
 
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefZoneDTO;
+import fr.gouv.culture.sdsi.reseau.flux.domain.RefZone;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ public interface RefZoneService {
     /**
      * Save a refZone.
      *
-     * @param refZoneDTO the entity to save
+     * @param refZone the entity to save
      * @return the persisted entity
      */
-    RefZoneDTO save(RefZoneDTO refZoneDTO);
+    RefZone save(RefZone refZone);
 
     /**
      * Get all the refZones.
@@ -26,7 +26,7 @@ public interface RefZoneService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<RefZoneDTO> findAll(Pageable pageable);
+    Page<RefZone> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface RefZoneService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<RefZoneDTO> findOne(Long id);
+    Optional<RefZone> findOne(Long id);
 
     /**
      * Delete the "id" refZone.

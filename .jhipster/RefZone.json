@@ -32,7 +32,7 @@
     ],
     "changelogDate": "20190212144239",
     "entityTableName": "ref_zone",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

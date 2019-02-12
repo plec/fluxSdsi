@@ -1,6 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.service;
 
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.FluxDTO;
+import fr.gouv.culture.sdsi.reseau.flux.domain.Flux;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ public interface FluxService {
     /**
      * Save a flux.
      *
-     * @param fluxDTO the entity to save
+     * @param flux the entity to save
      * @return the persisted entity
      */
-    FluxDTO save(FluxDTO fluxDTO);
+    Flux save(Flux flux);
 
     /**
      * Get all the fluxes.
@@ -26,7 +26,7 @@ public interface FluxService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<FluxDTO> findAll(Pageable pageable);
+    Page<Flux> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface FluxService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<FluxDTO> findOne(Long id);
+    Optional<Flux> findOne(Long id);
 
     /**
      * Delete the "id" flux.

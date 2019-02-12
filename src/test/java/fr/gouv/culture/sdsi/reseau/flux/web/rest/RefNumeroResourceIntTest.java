@@ -5,8 +5,6 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefNumero;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefNumeroRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefNumeroService;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefNumeroDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefNumeroMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,9 +49,6 @@ public class RefNumeroResourceIntTest {
 
     @Autowired
     private RefNumeroRepository refNumeroRepository;
-
-    @Autowired
-    private RefNumeroMapper refNumeroMapper;
 
     @Autowired
     private RefNumeroService refNumeroService;
@@ -113,10 +108,9 @@ public class RefNumeroResourceIntTest {
         int databaseSizeBeforeCreate = refNumeroRepository.findAll().size();
 
         // Create the RefNumero
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(refNumero);
         restRefNumeroMockMvc.perform(post("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refNumero)))
             .andExpect(status().isCreated());
 
         // Validate the RefNumero in the database
@@ -134,12 +128,11 @@ public class RefNumeroResourceIntTest {
 
         // Create the RefNumero with an existing ID
         refNumero.setId(1L);
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(refNumero);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefNumeroMockMvc.perform(post("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refNumero)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefNumero in the database
@@ -155,11 +148,10 @@ public class RefNumeroResourceIntTest {
         refNumero.setCode(null);
 
         // Create the RefNumero, which fails.
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(refNumero);
 
         restRefNumeroMockMvc.perform(post("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refNumero)))
             .andExpect(status().isBadRequest());
 
         List<RefNumero> refNumeroList = refNumeroRepository.findAll();
@@ -174,11 +166,10 @@ public class RefNumeroResourceIntTest {
         refNumero.setLibelle(null);
 
         // Create the RefNumero, which fails.
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(refNumero);
 
         restRefNumeroMockMvc.perform(post("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refNumero)))
             .andExpect(status().isBadRequest());
 
         List<RefNumero> refNumeroList = refNumeroRepository.findAll();
@@ -227,7 +218,7 @@ public class RefNumeroResourceIntTest {
     @Transactional
     public void updateRefNumero() throws Exception {
         // Initialize the database
-        refNumeroRepository.saveAndFlush(refNumero);
+        refNumeroService.save(refNumero);
 
         int databaseSizeBeforeUpdate = refNumeroRepository.findAll().size();
 
@@ -238,11 +229,10 @@ public class RefNumeroResourceIntTest {
         updatedRefNumero
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(updatedRefNumero);
 
         restRefNumeroMockMvc.perform(put("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedRefNumero)))
             .andExpect(status().isOk());
 
         // Validate the RefNumero in the database
@@ -259,12 +249,11 @@ public class RefNumeroResourceIntTest {
         int databaseSizeBeforeUpdate = refNumeroRepository.findAll().size();
 
         // Create the RefNumero
-        RefNumeroDTO refNumeroDTO = refNumeroMapper.toDto(refNumero);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefNumeroMockMvc.perform(put("/api/ref-numeros")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refNumeroDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refNumero)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefNumero in the database
@@ -276,7 +265,7 @@ public class RefNumeroResourceIntTest {
     @Transactional
     public void deleteRefNumero() throws Exception {
         // Initialize the database
-        refNumeroRepository.saveAndFlush(refNumero);
+        refNumeroService.save(refNumero);
 
         int databaseSizeBeforeDelete = refNumeroRepository.findAll().size();
 
@@ -303,28 +292,5 @@ public class RefNumeroResourceIntTest {
         assertThat(refNumero1).isNotEqualTo(refNumero2);
         refNumero1.setId(null);
         assertThat(refNumero1).isNotEqualTo(refNumero2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(RefNumeroDTO.class);
-        RefNumeroDTO refNumeroDTO1 = new RefNumeroDTO();
-        refNumeroDTO1.setId(1L);
-        RefNumeroDTO refNumeroDTO2 = new RefNumeroDTO();
-        assertThat(refNumeroDTO1).isNotEqualTo(refNumeroDTO2);
-        refNumeroDTO2.setId(refNumeroDTO1.getId());
-        assertThat(refNumeroDTO1).isEqualTo(refNumeroDTO2);
-        refNumeroDTO2.setId(2L);
-        assertThat(refNumeroDTO1).isNotEqualTo(refNumeroDTO2);
-        refNumeroDTO1.setId(null);
-        assertThat(refNumeroDTO1).isNotEqualTo(refNumeroDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(refNumeroMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(refNumeroMapper.fromId(null)).isNull();
     }
 }
