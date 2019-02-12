@@ -71,9 +71,6 @@ relationship OneToMany {
 	RefTypeFonction{code} to RefFonction
 }
 
-
-dto all with mapstruct except TypeFlux
-
 paginate all with pagination except TypeFlux
 
 service all with serviceImpl except TypeFlux
