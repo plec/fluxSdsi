@@ -1,0 +1,94 @@
+{
+    "name": "Flux",
+    "fields": [
+        {
+            "fieldName": "environnement",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sourceIP",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sourcePort",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sourceZone",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "destIP",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "destPort",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "destZone",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "environnement",
+            "otherEntityName": "refEnvironnement",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "sourceZone",
+            "otherEntityName": "refZone",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "destZone",
+            "otherEntityName": "refZone",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "type",
+            "otherEntityName": "refFlux",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        }
+    ],
+    "changelogDate": "20190212144241",
+    "entityTableName": "flux",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

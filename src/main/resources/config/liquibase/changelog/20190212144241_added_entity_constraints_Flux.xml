@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Flux.
+    -->
+    <changeSet id="20190212144241-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="environnement_id"
+                                 baseTableName="flux"
+                                 constraintName="fk_flux_environnement_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_environnement"/>
+
+        <addForeignKeyConstraint baseColumnNames="source_zone_id"
+                                 baseTableName="flux"
+                                 constraintName="fk_flux_source_zone_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_zone"/>
+
+        <addForeignKeyConstraint baseColumnNames="dest_zone_id"
+                                 baseTableName="flux"
+                                 constraintName="fk_flux_dest_zone_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_zone"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="flux"
+                                 constraintName="fk_flux_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_flux"/>
+
+    </changeSet>
+</databaseChangeLog>

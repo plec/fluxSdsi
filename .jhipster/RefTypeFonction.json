@@ -1,0 +1,36 @@
+{
+    "name": "RefTypeFonction",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "libelle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "refFonction",
+            "otherEntityRelationshipName": "codeFonction"
+        }
+    ],
+    "changelogDate": "20190212144237",
+    "entityTableName": "ref_type_fonction",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,128 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-flux-heading">Create or edit a Flux</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!flux.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="flux.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_environnement">Environnement</label>
+                    <input type="text" class="form-control" name="environnement" id="field_environnement"
+                        [(ngModel)]="flux.environnement" required/>
+                    <div [hidden]="!(editForm.controls.environnement?.dirty && editForm.controls.environnement?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.environnement?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_type">Type</label>
+                    <input type="text" class="form-control" name="type" id="field_type"
+                        [(ngModel)]="flux.type" required/>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceIP">Source IP</label>
+                    <input type="text" class="form-control" name="sourceIP" id="field_sourceIP"
+                        [(ngModel)]="flux.sourceIP" required/>
+                    <div [hidden]="!(editForm.controls.sourceIP?.dirty && editForm.controls.sourceIP?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sourceIP?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourcePort">Source Port</label>
+                    <input type="text" class="form-control" name="sourcePort" id="field_sourcePort"
+                        [(ngModel)]="flux.sourcePort" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceZone">Source Zone</label>
+                    <input type="text" class="form-control" name="sourceZone" id="field_sourceZone"
+                        [(ngModel)]="flux.sourceZone" required/>
+                    <div [hidden]="!(editForm.controls.sourceZone?.dirty && editForm.controls.sourceZone?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sourceZone?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destIP">Dest IP</label>
+                    <input type="text" class="form-control" name="destIP" id="field_destIP"
+                        [(ngModel)]="flux.destIP" required/>
+                    <div [hidden]="!(editForm.controls.destIP?.dirty && editForm.controls.destIP?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.destIP?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destPort">Dest Port</label>
+                    <input type="text" class="form-control" name="destPort" id="field_destPort"
+                        [(ngModel)]="flux.destPort" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destZone">Dest Zone</label>
+                    <input type="text" class="form-control" name="destZone" id="field_destZone"
+                        [(ngModel)]="flux.destZone" required/>
+                    <div [hidden]="!(editForm.controls.destZone?.dirty && editForm.controls.destZone?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.destZone?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_environnement">Environnement</label>
+                    <select class="form-control" id="field_environnement" name="environnement" [(ngModel)]="flux.environnementId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refEnvironnementOption.id" *ngFor="let refEnvironnementOption of refenvironnements; trackBy: trackRefEnvironnementById">{{refEnvironnementOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceZone">Source Zone</label>
+                    <select class="form-control" id="field_sourceZone" name="sourceZone" [(ngModel)]="flux.sourceZoneId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refZoneOption.id" *ngFor="let refZoneOption of refzones; trackBy: trackRefZoneById">{{refZoneOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destZone">Dest Zone</label>
+                    <select class="form-control" id="field_destZone" name="destZone" [(ngModel)]="flux.destZoneId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refZoneOption.id" *ngFor="let refZoneOption of refzones; trackBy: trackRefZoneById">{{refZoneOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_type">Type</label>
+                    <select class="form-control" id="field_type" name="type" [(ngModel)]="flux.typeId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refFluxOption.id" *ngFor="let refFluxOption of reffluxes; trackBy: trackRefFluxById">{{refFluxOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
