@@ -29,7 +29,7 @@
             "relationshipType": "one-to-many",
             "relationshipName": "code",
             "otherEntityName": "flux",
-            "otherEntityRelationshipName": "type"
+            "otherEntityRelationshipName": "refFlux"
         }
     ],
     "changelogDate": "20190212144236",

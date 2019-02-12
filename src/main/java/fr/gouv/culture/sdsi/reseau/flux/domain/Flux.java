@@ -58,19 +58,15 @@ public class Flux implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("codes")
-    private RefEnvironnement environnement;
+    private RefEnvironnement refEnvironnement;
 
     @ManyToOne
     @JsonIgnoreProperties("codes")
-    private RefZone sourceZone;
+    private RefFlux refFlux;
 
     @ManyToOne
     @JsonIgnoreProperties("codes")
-    private RefZone destZone;
-
-    @ManyToOne
-    @JsonIgnoreProperties("codes")
-    private RefFlux type;
+    private RefZone refZone;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -185,56 +181,43 @@ public class Flux implements Serializable {
         this.destZone = destZone;
     }
 
-    public RefEnvironnement getEnvironnement() {
-        return environnement;
+    public RefEnvironnement getRefEnvironnement() {
+        return refEnvironnement;
     }
 
-    public Flux environnement(RefEnvironnement refEnvironnement) {
-        this.environnement = refEnvironnement;
+    public Flux refEnvironnement(RefEnvironnement refEnvironnement) {
+        this.refEnvironnement = refEnvironnement;
         return this;
     }
 
-    public void setEnvironnement(RefEnvironnement refEnvironnement) {
-        this.environnement = refEnvironnement;
+    public void setRefEnvironnement(RefEnvironnement refEnvironnement) {
+        this.refEnvironnement = refEnvironnement;
     }
 
-    public RefZone getSourceZone() {
-        return sourceZone;
+    public RefFlux getRefFlux() {
+        return refFlux;
     }
 
-    public Flux sourceZone(RefZone refZone) {
-        this.sourceZone = refZone;
+    public Flux refFlux(RefFlux refFlux) {
+        this.refFlux = refFlux;
         return this;
     }
 
-    public void setSourceZone(RefZone refZone) {
-        this.sourceZone = refZone;
+    public void setRefFlux(RefFlux refFlux) {
+        this.refFlux = refFlux;
     }
 
-    public RefZone getDestZone() {
-        return destZone;
+    public RefZone getRefZone() {
+        return refZone;
     }
 
-    public Flux destZone(RefZone refZone) {
-        this.destZone = refZone;
+    public Flux refZone(RefZone refZone) {
+        this.refZone = refZone;
         return this;
     }
 
-    public void setDestZone(RefZone refZone) {
-        this.destZone = refZone;
-    }
-
-    public RefFlux getType() {
-        return type;
-    }
-
-    public Flux type(RefFlux refFlux) {
-        this.type = refFlux;
-        return this;
-    }
-
-    public void setType(RefFlux refFlux) {
-        this.type = refFlux;
+    public void setRefZone(RefZone refZone) {
+        this.refZone = refZone;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

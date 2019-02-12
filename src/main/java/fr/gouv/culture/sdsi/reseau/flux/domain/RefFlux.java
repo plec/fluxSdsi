@@ -43,7 +43,7 @@ public class RefFlux implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "refFlux")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Flux> codes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -105,13 +105,13 @@ public class RefFlux implements Serializable {
 
     public RefFlux addCode(Flux flux) {
         this.codes.add(flux);
-        flux.setType(this);
+        flux.setRefFlux(this);
         return this;
     }
 
     public RefFlux removeCode(Flux flux) {
         this.codes.remove(flux);
-        flux.setType(null);
+        flux.setRefFlux(null);
         return this;
     }
 

@@ -21,7 +21,7 @@
             "relationshipType": "one-to-many",
             "relationshipName": "code",
             "otherEntityName": "flux",
-            "otherEntityRelationshipName": "environnement"
+            "otherEntityRelationshipName": "refEnvironnement"
         }
     ],
     "changelogDate": "20190212144233",

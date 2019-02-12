@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_codeFonction">Code Fonction</label>
-                    <select class="form-control" id="field_codeFonction" name="codeFonction" [(ngModel)]="refFonction.codeFonctionId" >
+                    <label class="form-control-label" for="field_refTypeFonction">Ref Type Fonction</label>
+                    <select class="form-control" id="field_refTypeFonction" name="refTypeFonction" [(ngModel)]="refFonction.refTypeFonctionId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="refTypeFonctionOption.id" *ngFor="let refTypeFonctionOption of reftypefonctions; trackBy: trackRefTypeFonctionById">{{refTypeFonctionOption.id}}</option>
                     </select>

@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {RefTypeFonctionMapper.class})
 public interface RefFonctionMapper extends EntityMapper<RefFonctionDTO, RefFonction> {
 
-    @Mapping(source = "codeFonction.id", target = "codeFonctionId")
+    @Mapping(source = "refTypeFonction.id", target = "refTypeFonctionId")
     RefFonctionDTO toDto(RefFonction refFonction);
 
+    @Mapping(source = "refTypeFonctionId", target = "refTypeFonction")
     @Mapping(target = "codeZones", ignore = true)
-    @Mapping(source = "codeFonctionId", target = "codeFonction")
     RefFonction toEntity(RefFonctionDTO refFonctionDTO);
 
     default RefFonction fromId(Long id) {

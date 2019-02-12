@@ -37,16 +37,13 @@ public class RefZone implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "sourceZone")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Flux> codes = new HashSet<>();
-    @OneToMany(mappedBy = "destZone")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Flux> codes = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("codeZones")
-    private RefFonction code;
+    private RefFonction refFonction;
 
+    @OneToMany(mappedBy = "refZone")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Flux> codes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -82,29 +79,17 @@ public class RefZone implements Serializable {
         this.libelle = libelle;
     }
 
-    public Set<Flux> getCodes() {
-        return codes;
+    public RefFonction getRefFonction() {
+        return refFonction;
     }
 
-    public RefZone codes(Set<Flux> fluxes) {
-        this.codes = fluxes;
+    public RefZone refFonction(RefFonction refFonction) {
+        this.refFonction = refFonction;
         return this;
     }
 
-    public RefZone addCode(Flux flux) {
-        this.codes.add(flux);
-        flux.setSourceZone(this);
-        return this;
-    }
-
-    public RefZone removeCode(Flux flux) {
-        this.codes.remove(flux);
-        flux.setSourceZone(null);
-        return this;
-    }
-
-    public void setCodes(Set<Flux> fluxes) {
-        this.codes = fluxes;
+    public void setRefFonction(RefFonction refFonction) {
+        this.refFonction = refFonction;
     }
 
     public Set<Flux> getCodes() {
@@ -118,31 +103,18 @@ public class RefZone implements Serializable {
 
     public RefZone addCode(Flux flux) {
         this.codes.add(flux);
-        flux.setDestZone(this);
+        flux.setRefZone(this);
         return this;
     }
 
     public RefZone removeCode(Flux flux) {
         this.codes.remove(flux);
-        flux.setDestZone(null);
+        flux.setRefZone(null);
         return this;
     }
 
     public void setCodes(Set<Flux> fluxes) {
         this.codes = fluxes;
-    }
-
-    public RefFonction getCode() {
-        return code;
-    }
-
-    public RefZone code(RefFonction refFonction) {
-        this.code = refFonction;
-        return this;
-    }
-
-    public void setCode(RefFonction refFonction) {
-        this.code = refFonction;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

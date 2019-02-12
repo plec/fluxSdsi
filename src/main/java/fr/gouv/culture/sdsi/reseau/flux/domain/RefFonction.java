@@ -45,13 +45,13 @@ public class RefFonction implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "code")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<RefZone> codeZones = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("codes")
-    private RefTypeFonction codeFonction;
+    private RefTypeFonction refTypeFonction;
 
+    @OneToMany(mappedBy = "refFonction")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<RefZone> codeZones = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -113,6 +113,19 @@ public class RefFonction implements Serializable {
         this.libelle = libelle;
     }
 
+    public RefTypeFonction getRefTypeFonction() {
+        return refTypeFonction;
+    }
+
+    public RefFonction refTypeFonction(RefTypeFonction refTypeFonction) {
+        this.refTypeFonction = refTypeFonction;
+        return this;
+    }
+
+    public void setRefTypeFonction(RefTypeFonction refTypeFonction) {
+        this.refTypeFonction = refTypeFonction;
+    }
+
     public Set<RefZone> getCodeZones() {
         return codeZones;
     }
@@ -124,31 +137,18 @@ public class RefFonction implements Serializable {
 
     public RefFonction addCodeZone(RefZone refZone) {
         this.codeZones.add(refZone);
-        refZone.setCode(this);
+        refZone.setRefFonction(this);
         return this;
     }
 
     public RefFonction removeCodeZone(RefZone refZone) {
         this.codeZones.remove(refZone);
-        refZone.setCode(null);
+        refZone.setRefFonction(null);
         return this;
     }
 
     public void setCodeZones(Set<RefZone> refZones) {
         this.codeZones = refZones;
-    }
-
-    public RefTypeFonction getCodeFonction() {
-        return codeFonction;
-    }
-
-    public RefFonction codeFonction(RefTypeFonction refTypeFonction) {
-        this.codeFonction = refTypeFonction;
-        return this;
-    }
-
-    public void setCodeFonction(RefTypeFonction refTypeFonction) {
-        this.codeFonction = refTypeFonction;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

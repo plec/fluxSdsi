@@ -6,8 +6,8 @@ export interface IRefFonction {
     codeZone?: string;
     codeFonction?: string;
     libelle?: string;
+    refTypeFonctionId?: number;
     codeZones?: IRefZone[];
-    codeFonctionId?: number;
 }
 
 export class RefFonction implements IRefFonction {
@@ -17,7 +17,7 @@ export class RefFonction implements IRefFonction {
         public codeZone?: string,
         public codeFonction?: string,
         public libelle?: string,
-        public codeZones?: IRefZone[],
-        public codeFonctionId?: number
+        public refTypeFonctionId?: number,
+        public codeZones?: IRefZone[]
     ) {}
 }

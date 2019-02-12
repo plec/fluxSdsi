@@ -36,7 +36,7 @@ public class RefTypeFonction implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "codeFonction")
+    @OneToMany(mappedBy = "refTypeFonction")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<RefFonction> codes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -85,13 +85,13 @@ public class RefTypeFonction implements Serializable {
 
     public RefTypeFonction addCode(RefFonction refFonction) {
         this.codes.add(refFonction);
-        refFonction.setCodeFonction(this);
+        refFonction.setRefTypeFonction(this);
         return this;
     }
 
     public RefTypeFonction removeCode(RefFonction refFonction) {
         this.codes.remove(refFonction);
-        refFonction.setCodeFonction(null);
+        refFonction.setRefTypeFonction(null);
         return this;
     }
 

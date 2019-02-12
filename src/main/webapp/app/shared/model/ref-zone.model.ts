@@ -4,18 +4,10 @@ export interface IRefZone {
     id?: number;
     code?: string;
     libelle?: string;
+    refFonctionId?: number;
     codes?: IFlux[];
-    codes?: IFlux[];
-    codeId?: number;
 }
 
 export class RefZone implements IRefZone {
-    constructor(
-        public id?: number,
-        public code?: string,
-        public libelle?: string,
-        public codes?: IFlux[],
-        public codes?: IFlux[],
-        public codeId?: number
-    ) {}
+    constructor(public id?: number, public code?: string, public libelle?: string, public refFonctionId?: number, public codes?: IFlux[]) {}
 }

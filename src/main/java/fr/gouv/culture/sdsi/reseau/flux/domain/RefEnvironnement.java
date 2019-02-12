@@ -36,7 +36,7 @@ public class RefEnvironnement implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "environnement")
+    @OneToMany(mappedBy = "refEnvironnement")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Flux> codes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -85,13 +85,13 @@ public class RefEnvironnement implements Serializable {
 
     public RefEnvironnement addCode(Flux flux) {
         this.codes.add(flux);
-        flux.setEnvironnement(this);
+        flux.setRefEnvironnement(this);
         return this;
     }
 
     public RefEnvironnement removeCode(Flux flux) {
         this.codes.remove(flux);
-        flux.setEnvironnement(null);
+        flux.setRefEnvironnement(null);
         return this;
     }
 

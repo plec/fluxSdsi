@@ -37,28 +37,22 @@
                 <dd>
                     <span>{{flux.destZone}}</span>
                 </dd>
-                <dt><span>Environnement</span></dt>
+                <dt><span>Ref Environnement</span></dt>
                 <dd>
-                    <div *ngIf="flux.environnementId">
-                        <a [routerLink]="['/ref-environnement', flux.environnementId, 'view']">{{flux.environnementId}}</a>
+                    <div *ngIf="flux.refEnvironnementId">
+                        <a [routerLink]="['/ref-environnement', flux.refEnvironnementId, 'view']">{{flux.refEnvironnementId}}</a>
                     </div>
                 </dd>
-                <dt><span>Source Zone</span></dt>
+                <dt><span>Ref Flux</span></dt>
                 <dd>
-                    <div *ngIf="flux.sourceZoneId">
-                        <a [routerLink]="['/ref-zone', flux.sourceZoneId, 'view']">{{flux.sourceZoneId}}</a>
+                    <div *ngIf="flux.refFluxId">
+                        <a [routerLink]="['/ref-flux', flux.refFluxId, 'view']">{{flux.refFluxId}}</a>
                     </div>
                 </dd>
-                <dt><span>Dest Zone</span></dt>
+                <dt><span>Ref Zone</span></dt>
                 <dd>
-                    <div *ngIf="flux.destZoneId">
-                        <a [routerLink]="['/ref-zone', flux.destZoneId, 'view']">{{flux.destZoneId}}</a>
-                    </div>
-                </dd>
-                <dt><span>Type</span></dt>
-                <dd>
-                    <div *ngIf="flux.typeId">
-                        <a [routerLink]="['/ref-flux', flux.typeId, 'view']">{{flux.typeId}}</a>
+                    <div *ngIf="flux.refZoneId">
+                        <a [routerLink]="['/ref-zone', flux.refZoneId, 'view']">{{flux.refZoneId}}</a>
                     </div>
                 </dd>
             </dl>
