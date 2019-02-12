@@ -39,20 +39,20 @@
                 </dd>
                 <dt><span>Ref Environnement</span></dt>
                 <dd>
-                    <div *ngIf="flux.refEnvironnementId">
-                        <a [routerLink]="['/ref-environnement', flux.refEnvironnementId, 'view']">{{flux.refEnvironnementId}}</a>
+                    <div *ngIf="flux.refEnvironnement">
+                        <a [routerLink]="['/ref-environnement', flux.refEnvironnement?.id, 'view']">{{flux.refEnvironnement?.id}}</a>
                     </div>
                 </dd>
                 <dt><span>Ref Flux</span></dt>
                 <dd>
-                    <div *ngIf="flux.refFluxId">
-                        <a [routerLink]="['/ref-flux', flux.refFluxId, 'view']">{{flux.refFluxId}}</a>
+                    <div *ngIf="flux.refFlux">
+                        <a [routerLink]="['/ref-flux', flux.refFlux?.id, 'view']">{{flux.refFlux?.id}}</a>
                     </div>
                 </dd>
                 <dt><span>Ref Zone</span></dt>
                 <dd>
-                    <div *ngIf="flux.refZoneId">
-                        <a [routerLink]="['/ref-zone', flux.refZoneId, 'view']">{{flux.refZoneId}}</a>
+                    <div *ngIf="flux.refZone">
+                        <a [routerLink]="['/ref-zone', flux.refZone?.id, 'view']">{{flux.refZone?.id}}</a>
                     </div>
                 </dd>
             </dl>

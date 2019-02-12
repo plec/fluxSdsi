@@ -23,9 +23,9 @@
             <th jhiSortBy="destIP"><span>Dest IP</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="destPort"><span>Dest Port</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="destZone"><span>Dest Zone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="refEnvironnementId"><span>Ref Environnement</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="refFluxId"><span>Ref Flux</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="refZoneId"><span>Ref Zone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="refEnvironnement.id"><span>Ref Environnement</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="refFlux.id"><span>Ref Flux</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="refZone.id"><span>Ref Zone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -41,18 +41,18 @@
                 <td>{{flux.destPort}}</td>
                 <td>{{flux.destZone}}</td>
                 <td>
-                    <div *ngIf="flux.refEnvironnementId">
-                        <a [routerLink]="['../ref-environnement', flux.refEnvironnementId , 'view' ]" >{{flux.refEnvironnementId}}</a>
+                    <div *ngIf="flux.refEnvironnement">
+                        <a [routerLink]="['../ref-environnement', flux.refEnvironnement?.id, 'view' ]" >{{flux.refEnvironnement?.id}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="flux.refFluxId">
-                        <a [routerLink]="['../ref-flux', flux.refFluxId , 'view' ]" >{{flux.refFluxId}}</a>
+                    <div *ngIf="flux.refFlux">
+                        <a [routerLink]="['../ref-flux', flux.refFlux?.id, 'view' ]" >{{flux.refFlux?.id}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="flux.refZoneId">
-                        <a [routerLink]="['../ref-zone', flux.refZoneId , 'view' ]" >{{flux.refZoneId}}</a>
+                    <div *ngIf="flux.refZone">
+                        <a [routerLink]="['../ref-zone', flux.refZone?.id, 'view' ]" >{{flux.refZone?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

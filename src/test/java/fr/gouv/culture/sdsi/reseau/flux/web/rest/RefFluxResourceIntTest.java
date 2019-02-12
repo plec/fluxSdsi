@@ -5,8 +5,6 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefFlux;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefFluxRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefFluxService;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFluxDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefFluxMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -55,9 +53,6 @@ public class RefFluxResourceIntTest {
 
     @Autowired
     private RefFluxRepository refFluxRepository;
-
-    @Autowired
-    private RefFluxMapper refFluxMapper;
 
     @Autowired
     private RefFluxService refFluxService;
@@ -118,10 +113,9 @@ public class RefFluxResourceIntTest {
         int databaseSizeBeforeCreate = refFluxRepository.findAll().size();
 
         // Create the RefFlux
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
         restRefFluxMockMvc.perform(post("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isCreated());
 
         // Validate the RefFlux in the database
@@ -140,12 +134,11 @@ public class RefFluxResourceIntTest {
 
         // Create the RefFlux with an existing ID
         refFlux.setId(1L);
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefFluxMockMvc.perform(post("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefFlux in the database
@@ -161,11 +154,10 @@ public class RefFluxResourceIntTest {
         refFlux.setCode(null);
 
         // Create the RefFlux, which fails.
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
 
         restRefFluxMockMvc.perform(post("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isBadRequest());
 
         List<RefFlux> refFluxList = refFluxRepository.findAll();
@@ -180,11 +172,10 @@ public class RefFluxResourceIntTest {
         refFlux.setType(null);
 
         // Create the RefFlux, which fails.
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
 
         restRefFluxMockMvc.perform(post("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isBadRequest());
 
         List<RefFlux> refFluxList = refFluxRepository.findAll();
@@ -199,11 +190,10 @@ public class RefFluxResourceIntTest {
         refFlux.setLibelle(null);
 
         // Create the RefFlux, which fails.
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
 
         restRefFluxMockMvc.perform(post("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isBadRequest());
 
         List<RefFlux> refFluxList = refFluxRepository.findAll();
@@ -254,7 +244,7 @@ public class RefFluxResourceIntTest {
     @Transactional
     public void updateRefFlux() throws Exception {
         // Initialize the database
-        refFluxRepository.saveAndFlush(refFlux);
+        refFluxService.save(refFlux);
 
         int databaseSizeBeforeUpdate = refFluxRepository.findAll().size();
 
@@ -266,11 +256,10 @@ public class RefFluxResourceIntTest {
             .code(UPDATED_CODE)
             .type(UPDATED_TYPE)
             .libelle(UPDATED_LIBELLE);
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(updatedRefFlux);
 
         restRefFluxMockMvc.perform(put("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedRefFlux)))
             .andExpect(status().isOk());
 
         // Validate the RefFlux in the database
@@ -288,12 +277,11 @@ public class RefFluxResourceIntTest {
         int databaseSizeBeforeUpdate = refFluxRepository.findAll().size();
 
         // Create the RefFlux
-        RefFluxDTO refFluxDTO = refFluxMapper.toDto(refFlux);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefFluxMockMvc.perform(put("/api/ref-fluxes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFluxDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refFlux)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefFlux in the database
@@ -305,7 +293,7 @@ public class RefFluxResourceIntTest {
     @Transactional
     public void deleteRefFlux() throws Exception {
         // Initialize the database
-        refFluxRepository.saveAndFlush(refFlux);
+        refFluxService.save(refFlux);
 
         int databaseSizeBeforeDelete = refFluxRepository.findAll().size();
 
@@ -332,28 +320,5 @@ public class RefFluxResourceIntTest {
         assertThat(refFlux1).isNotEqualTo(refFlux2);
         refFlux1.setId(null);
         assertThat(refFlux1).isNotEqualTo(refFlux2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(RefFluxDTO.class);
-        RefFluxDTO refFluxDTO1 = new RefFluxDTO();
-        refFluxDTO1.setId(1L);
-        RefFluxDTO refFluxDTO2 = new RefFluxDTO();
-        assertThat(refFluxDTO1).isNotEqualTo(refFluxDTO2);
-        refFluxDTO2.setId(refFluxDTO1.getId());
-        assertThat(refFluxDTO1).isEqualTo(refFluxDTO2);
-        refFluxDTO2.setId(2L);
-        assertThat(refFluxDTO1).isNotEqualTo(refFluxDTO2);
-        refFluxDTO1.setId(null);
-        assertThat(refFluxDTO1).isNotEqualTo(refFluxDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(refFluxMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(refFluxMapper.fromId(null)).isNull();
     }
 }

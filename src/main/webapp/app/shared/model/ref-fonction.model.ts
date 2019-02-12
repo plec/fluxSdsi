@@ -1,3 +1,4 @@
+import { IRefTypeFonction } from 'app/shared/model/ref-type-fonction.model';
 import { IRefZone } from 'app/shared/model/ref-zone.model';
 
 export interface IRefFonction {
@@ -6,7 +7,7 @@ export interface IRefFonction {
     codeZone?: string;
     codeFonction?: string;
     libelle?: string;
-    refTypeFonctionId?: number;
+    refTypeFonction?: IRefTypeFonction;
     codeZones?: IRefZone[];
 }
 
@@ -17,7 +18,7 @@ export class RefFonction implements IRefFonction {
         public codeZone?: string,
         public codeFonction?: string,
         public libelle?: string,
-        public refTypeFonctionId?: number,
+        public refTypeFonction?: IRefTypeFonction,
         public codeZones?: IRefZone[]
     ) {}
 }

@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.FluxService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.Flux;
 import fr.gouv.culture.sdsi.reseau.flux.repository.FluxRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.FluxDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.FluxMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class FluxServiceImpl implements FluxService {
 
     private final FluxRepository fluxRepository;
 
-    private final FluxMapper fluxMapper;
-
-    public FluxServiceImpl(FluxRepository fluxRepository, FluxMapper fluxMapper) {
+    public FluxServiceImpl(FluxRepository fluxRepository) {
         this.fluxRepository = fluxRepository;
-        this.fluxMapper = fluxMapper;
     }
 
     /**
      * Save a flux.
      *
-     * @param fluxDTO the entity to save
+     * @param flux the entity to save
      * @return the persisted entity
      */
     @Override
-    public FluxDTO save(FluxDTO fluxDTO) {
-        log.debug("Request to save Flux : {}", fluxDTO);
-        Flux flux = fluxMapper.toEntity(fluxDTO);
-        flux = fluxRepository.save(flux);
-        return fluxMapper.toDto(flux);
+    public Flux save(Flux flux) {
+        log.debug("Request to save Flux : {}", flux);
+        return fluxRepository.save(flux);
     }
 
     /**
@@ -55,10 +48,9 @@ public class FluxServiceImpl implements FluxService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<FluxDTO> findAll(Pageable pageable) {
+    public Page<Flux> findAll(Pageable pageable) {
         log.debug("Request to get all Fluxes");
-        return fluxRepository.findAll(pageable)
-            .map(fluxMapper::toDto);
+        return fluxRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class FluxServiceImpl implements FluxService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<FluxDTO> findOne(Long id) {
+    public Optional<Flux> findOne(Long id) {
         log.debug("Request to get Flux : {}", id);
-        return fluxRepository.findById(id)
-            .map(fluxMapper::toDto);
+        return fluxRepository.findById(id);
     }
 
     /**

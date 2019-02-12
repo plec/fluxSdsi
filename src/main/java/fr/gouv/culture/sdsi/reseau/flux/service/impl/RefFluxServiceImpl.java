@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefFluxService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefFlux;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefFluxRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFluxDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefFluxMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class RefFluxServiceImpl implements RefFluxService {
 
     private final RefFluxRepository refFluxRepository;
 
-    private final RefFluxMapper refFluxMapper;
-
-    public RefFluxServiceImpl(RefFluxRepository refFluxRepository, RefFluxMapper refFluxMapper) {
+    public RefFluxServiceImpl(RefFluxRepository refFluxRepository) {
         this.refFluxRepository = refFluxRepository;
-        this.refFluxMapper = refFluxMapper;
     }
 
     /**
      * Save a refFlux.
      *
-     * @param refFluxDTO the entity to save
+     * @param refFlux the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefFluxDTO save(RefFluxDTO refFluxDTO) {
-        log.debug("Request to save RefFlux : {}", refFluxDTO);
-        RefFlux refFlux = refFluxMapper.toEntity(refFluxDTO);
-        refFlux = refFluxRepository.save(refFlux);
-        return refFluxMapper.toDto(refFlux);
+    public RefFlux save(RefFlux refFlux) {
+        log.debug("Request to save RefFlux : {}", refFlux);
+        return refFluxRepository.save(refFlux);
     }
 
     /**
@@ -55,10 +48,9 @@ public class RefFluxServiceImpl implements RefFluxService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefFluxDTO> findAll(Pageable pageable) {
+    public Page<RefFlux> findAll(Pageable pageable) {
         log.debug("Request to get all RefFluxes");
-        return refFluxRepository.findAll(pageable)
-            .map(refFluxMapper::toDto);
+        return refFluxRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class RefFluxServiceImpl implements RefFluxService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefFluxDTO> findOne(Long id) {
+    public Optional<RefFlux> findOne(Long id) {
         log.debug("Request to get RefFlux : {}", id);
-        return refFluxRepository.findById(id)
-            .map(refFluxMapper::toDto);
+        return refFluxRepository.findById(id);
     }
 
     /**

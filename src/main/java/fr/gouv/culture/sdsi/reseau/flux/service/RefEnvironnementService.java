@@ -1,6 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.service;
 
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefEnvironnementDTO;
+import fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironnement;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ public interface RefEnvironnementService {
     /**
      * Save a refEnvironnement.
      *
-     * @param refEnvironnementDTO the entity to save
+     * @param refEnvironnement the entity to save
      * @return the persisted entity
      */
-    RefEnvironnementDTO save(RefEnvironnementDTO refEnvironnementDTO);
+    RefEnvironnement save(RefEnvironnement refEnvironnement);
 
     /**
      * Get all the refEnvironnements.
@@ -26,7 +26,7 @@ public interface RefEnvironnementService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<RefEnvironnementDTO> findAll(Pageable pageable);
+    Page<RefEnvironnement> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface RefEnvironnementService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<RefEnvironnementDTO> findOne(Long id);
+    Optional<RefEnvironnement> findOne(Long id);
 
     /**
      * Delete the "id" refEnvironnement.

@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefNumeroService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefNumero;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefNumeroRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefNumeroDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefNumeroMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class RefNumeroServiceImpl implements RefNumeroService {
 
     private final RefNumeroRepository refNumeroRepository;
 
-    private final RefNumeroMapper refNumeroMapper;
-
-    public RefNumeroServiceImpl(RefNumeroRepository refNumeroRepository, RefNumeroMapper refNumeroMapper) {
+    public RefNumeroServiceImpl(RefNumeroRepository refNumeroRepository) {
         this.refNumeroRepository = refNumeroRepository;
-        this.refNumeroMapper = refNumeroMapper;
     }
 
     /**
      * Save a refNumero.
      *
-     * @param refNumeroDTO the entity to save
+     * @param refNumero the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefNumeroDTO save(RefNumeroDTO refNumeroDTO) {
-        log.debug("Request to save RefNumero : {}", refNumeroDTO);
-        RefNumero refNumero = refNumeroMapper.toEntity(refNumeroDTO);
-        refNumero = refNumeroRepository.save(refNumero);
-        return refNumeroMapper.toDto(refNumero);
+    public RefNumero save(RefNumero refNumero) {
+        log.debug("Request to save RefNumero : {}", refNumero);
+        return refNumeroRepository.save(refNumero);
     }
 
     /**
@@ -55,10 +48,9 @@ public class RefNumeroServiceImpl implements RefNumeroService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefNumeroDTO> findAll(Pageable pageable) {
+    public Page<RefNumero> findAll(Pageable pageable) {
         log.debug("Request to get all RefNumeros");
-        return refNumeroRepository.findAll(pageable)
-            .map(refNumeroMapper::toDto);
+        return refNumeroRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class RefNumeroServiceImpl implements RefNumeroService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefNumeroDTO> findOne(Long id) {
+    public Optional<RefNumero> findOne(Long id) {
         log.debug("Request to get RefNumero : {}", id);
-        return refNumeroRepository.findById(id)
-            .map(refNumeroMapper::toDto);
+        return refNumeroRepository.findById(id);
     }
 
     /**

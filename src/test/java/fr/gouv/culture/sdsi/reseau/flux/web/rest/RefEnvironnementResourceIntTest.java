@@ -5,8 +5,6 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironnement;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefEnvironnementRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefEnvironnementService;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefEnvironnementDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefEnvironnementMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,9 +49,6 @@ public class RefEnvironnementResourceIntTest {
 
     @Autowired
     private RefEnvironnementRepository refEnvironnementRepository;
-
-    @Autowired
-    private RefEnvironnementMapper refEnvironnementMapper;
 
     @Autowired
     private RefEnvironnementService refEnvironnementService;
@@ -113,10 +108,9 @@ public class RefEnvironnementResourceIntTest {
         int databaseSizeBeforeCreate = refEnvironnementRepository.findAll().size();
 
         // Create the RefEnvironnement
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(refEnvironnement);
         restRefEnvironnementMockMvc.perform(post("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refEnvironnement)))
             .andExpect(status().isCreated());
 
         // Validate the RefEnvironnement in the database
@@ -134,12 +128,11 @@ public class RefEnvironnementResourceIntTest {
 
         // Create the RefEnvironnement with an existing ID
         refEnvironnement.setId(1L);
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(refEnvironnement);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefEnvironnementMockMvc.perform(post("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refEnvironnement)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefEnvironnement in the database
@@ -155,11 +148,10 @@ public class RefEnvironnementResourceIntTest {
         refEnvironnement.setCode(null);
 
         // Create the RefEnvironnement, which fails.
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(refEnvironnement);
 
         restRefEnvironnementMockMvc.perform(post("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refEnvironnement)))
             .andExpect(status().isBadRequest());
 
         List<RefEnvironnement> refEnvironnementList = refEnvironnementRepository.findAll();
@@ -174,11 +166,10 @@ public class RefEnvironnementResourceIntTest {
         refEnvironnement.setLibelle(null);
 
         // Create the RefEnvironnement, which fails.
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(refEnvironnement);
 
         restRefEnvironnementMockMvc.perform(post("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refEnvironnement)))
             .andExpect(status().isBadRequest());
 
         List<RefEnvironnement> refEnvironnementList = refEnvironnementRepository.findAll();
@@ -227,7 +218,7 @@ public class RefEnvironnementResourceIntTest {
     @Transactional
     public void updateRefEnvironnement() throws Exception {
         // Initialize the database
-        refEnvironnementRepository.saveAndFlush(refEnvironnement);
+        refEnvironnementService.save(refEnvironnement);
 
         int databaseSizeBeforeUpdate = refEnvironnementRepository.findAll().size();
 
@@ -238,11 +229,10 @@ public class RefEnvironnementResourceIntTest {
         updatedRefEnvironnement
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(updatedRefEnvironnement);
 
         restRefEnvironnementMockMvc.perform(put("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedRefEnvironnement)))
             .andExpect(status().isOk());
 
         // Validate the RefEnvironnement in the database
@@ -259,12 +249,11 @@ public class RefEnvironnementResourceIntTest {
         int databaseSizeBeforeUpdate = refEnvironnementRepository.findAll().size();
 
         // Create the RefEnvironnement
-        RefEnvironnementDTO refEnvironnementDTO = refEnvironnementMapper.toDto(refEnvironnement);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefEnvironnementMockMvc.perform(put("/api/ref-environnements")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refEnvironnementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refEnvironnement)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefEnvironnement in the database
@@ -276,7 +265,7 @@ public class RefEnvironnementResourceIntTest {
     @Transactional
     public void deleteRefEnvironnement() throws Exception {
         // Initialize the database
-        refEnvironnementRepository.saveAndFlush(refEnvironnement);
+        refEnvironnementService.save(refEnvironnement);
 
         int databaseSizeBeforeDelete = refEnvironnementRepository.findAll().size();
 
@@ -303,28 +292,5 @@ public class RefEnvironnementResourceIntTest {
         assertThat(refEnvironnement1).isNotEqualTo(refEnvironnement2);
         refEnvironnement1.setId(null);
         assertThat(refEnvironnement1).isNotEqualTo(refEnvironnement2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(RefEnvironnementDTO.class);
-        RefEnvironnementDTO refEnvironnementDTO1 = new RefEnvironnementDTO();
-        refEnvironnementDTO1.setId(1L);
-        RefEnvironnementDTO refEnvironnementDTO2 = new RefEnvironnementDTO();
-        assertThat(refEnvironnementDTO1).isNotEqualTo(refEnvironnementDTO2);
-        refEnvironnementDTO2.setId(refEnvironnementDTO1.getId());
-        assertThat(refEnvironnementDTO1).isEqualTo(refEnvironnementDTO2);
-        refEnvironnementDTO2.setId(2L);
-        assertThat(refEnvironnementDTO1).isNotEqualTo(refEnvironnementDTO2);
-        refEnvironnementDTO1.setId(null);
-        assertThat(refEnvironnementDTO1).isNotEqualTo(refEnvironnementDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(refEnvironnementMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(refEnvironnementMapper.fromId(null)).isNull();
     }
 }

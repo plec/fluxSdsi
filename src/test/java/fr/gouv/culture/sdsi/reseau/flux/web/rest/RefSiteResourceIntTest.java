@@ -5,8 +5,6 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefSite;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefSiteRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefSiteService;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefSiteDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefSiteMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,9 +49,6 @@ public class RefSiteResourceIntTest {
 
     @Autowired
     private RefSiteRepository refSiteRepository;
-
-    @Autowired
-    private RefSiteMapper refSiteMapper;
 
     @Autowired
     private RefSiteService refSiteService;
@@ -113,10 +108,9 @@ public class RefSiteResourceIntTest {
         int databaseSizeBeforeCreate = refSiteRepository.findAll().size();
 
         // Create the RefSite
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(refSite);
         restRefSiteMockMvc.perform(post("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refSite)))
             .andExpect(status().isCreated());
 
         // Validate the RefSite in the database
@@ -134,12 +128,11 @@ public class RefSiteResourceIntTest {
 
         // Create the RefSite with an existing ID
         refSite.setId(1L);
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(refSite);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefSiteMockMvc.perform(post("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refSite)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefSite in the database
@@ -155,11 +148,10 @@ public class RefSiteResourceIntTest {
         refSite.setCode(null);
 
         // Create the RefSite, which fails.
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(refSite);
 
         restRefSiteMockMvc.perform(post("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refSite)))
             .andExpect(status().isBadRequest());
 
         List<RefSite> refSiteList = refSiteRepository.findAll();
@@ -174,11 +166,10 @@ public class RefSiteResourceIntTest {
         refSite.setLibelle(null);
 
         // Create the RefSite, which fails.
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(refSite);
 
         restRefSiteMockMvc.perform(post("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refSite)))
             .andExpect(status().isBadRequest());
 
         List<RefSite> refSiteList = refSiteRepository.findAll();
@@ -227,7 +218,7 @@ public class RefSiteResourceIntTest {
     @Transactional
     public void updateRefSite() throws Exception {
         // Initialize the database
-        refSiteRepository.saveAndFlush(refSite);
+        refSiteService.save(refSite);
 
         int databaseSizeBeforeUpdate = refSiteRepository.findAll().size();
 
@@ -238,11 +229,10 @@ public class RefSiteResourceIntTest {
         updatedRefSite
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(updatedRefSite);
 
         restRefSiteMockMvc.perform(put("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedRefSite)))
             .andExpect(status().isOk());
 
         // Validate the RefSite in the database
@@ -259,12 +249,11 @@ public class RefSiteResourceIntTest {
         int databaseSizeBeforeUpdate = refSiteRepository.findAll().size();
 
         // Create the RefSite
-        RefSiteDTO refSiteDTO = refSiteMapper.toDto(refSite);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefSiteMockMvc.perform(put("/api/ref-sites")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refSiteDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(refSite)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefSite in the database
@@ -276,7 +265,7 @@ public class RefSiteResourceIntTest {
     @Transactional
     public void deleteRefSite() throws Exception {
         // Initialize the database
-        refSiteRepository.saveAndFlush(refSite);
+        refSiteService.save(refSite);
 
         int databaseSizeBeforeDelete = refSiteRepository.findAll().size();
 
@@ -303,28 +292,5 @@ public class RefSiteResourceIntTest {
         assertThat(refSite1).isNotEqualTo(refSite2);
         refSite1.setId(null);
         assertThat(refSite1).isNotEqualTo(refSite2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(RefSiteDTO.class);
-        RefSiteDTO refSiteDTO1 = new RefSiteDTO();
-        refSiteDTO1.setId(1L);
-        RefSiteDTO refSiteDTO2 = new RefSiteDTO();
-        assertThat(refSiteDTO1).isNotEqualTo(refSiteDTO2);
-        refSiteDTO2.setId(refSiteDTO1.getId());
-        assertThat(refSiteDTO1).isEqualTo(refSiteDTO2);
-        refSiteDTO2.setId(2L);
-        assertThat(refSiteDTO1).isNotEqualTo(refSiteDTO2);
-        refSiteDTO1.setId(null);
-        assertThat(refSiteDTO1).isNotEqualTo(refSiteDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(refSiteMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(refSiteMapper.fromId(null)).isNull();
     }
 }

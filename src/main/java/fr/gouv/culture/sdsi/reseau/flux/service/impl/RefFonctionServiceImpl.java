@@ -3,8 +3,6 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefFonctionService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefFonction;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefFonctionRepository;
-import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFonctionDTO;
-import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefFonctionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +24,20 @@ public class RefFonctionServiceImpl implements RefFonctionService {
 
     private final RefFonctionRepository refFonctionRepository;
 
-    private final RefFonctionMapper refFonctionMapper;
-
-    public RefFonctionServiceImpl(RefFonctionRepository refFonctionRepository, RefFonctionMapper refFonctionMapper) {
+    public RefFonctionServiceImpl(RefFonctionRepository refFonctionRepository) {
         this.refFonctionRepository = refFonctionRepository;
-        this.refFonctionMapper = refFonctionMapper;
     }
 
     /**
      * Save a refFonction.
      *
-     * @param refFonctionDTO the entity to save
+     * @param refFonction the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefFonctionDTO save(RefFonctionDTO refFonctionDTO) {
-        log.debug("Request to save RefFonction : {}", refFonctionDTO);
-        RefFonction refFonction = refFonctionMapper.toEntity(refFonctionDTO);
-        refFonction = refFonctionRepository.save(refFonction);
-        return refFonctionMapper.toDto(refFonction);
+    public RefFonction save(RefFonction refFonction) {
+        log.debug("Request to save RefFonction : {}", refFonction);
+        return refFonctionRepository.save(refFonction);
     }
 
     /**
@@ -55,10 +48,9 @@ public class RefFonctionServiceImpl implements RefFonctionService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefFonctionDTO> findAll(Pageable pageable) {
+    public Page<RefFonction> findAll(Pageable pageable) {
         log.debug("Request to get all RefFonctions");
-        return refFonctionRepository.findAll(pageable)
-            .map(refFonctionMapper::toDto);
+        return refFonctionRepository.findAll(pageable);
     }
 
 
@@ -70,10 +62,9 @@ public class RefFonctionServiceImpl implements RefFonctionService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefFonctionDTO> findOne(Long id) {
+    public Optional<RefFonction> findOne(Long id) {
         log.debug("Request to get RefFonction : {}", id);
-        return refFonctionRepository.findById(id)
-            .map(refFonctionMapper::toDto);
+        return refFonctionRepository.findById(id);
     }
 
     /**
