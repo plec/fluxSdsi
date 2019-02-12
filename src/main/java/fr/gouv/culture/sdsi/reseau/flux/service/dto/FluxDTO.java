@@ -33,13 +33,11 @@ public class FluxDTO implements Serializable {
     private String destZone;
 
 
-    private Long environnementId;
+    private Long refEnvironnementId;
 
-    private Long sourceZoneId;
+    private Long refFluxId;
 
-    private Long destZoneId;
-
-    private Long typeId;
+    private Long refZoneId;
 
     public Long getId() {
         return id;
@@ -113,36 +111,28 @@ public class FluxDTO implements Serializable {
         this.destZone = destZone;
     }
 
-    public Long getEnvironnementId() {
-        return environnementId;
+    public Long getRefEnvironnementId() {
+        return refEnvironnementId;
     }
 
-    public void setEnvironnementId(Long refEnvironnementId) {
-        this.environnementId = refEnvironnementId;
+    public void setRefEnvironnementId(Long refEnvironnementId) {
+        this.refEnvironnementId = refEnvironnementId;
     }
 
-    public Long getSourceZoneId() {
-        return sourceZoneId;
+    public Long getRefFluxId() {
+        return refFluxId;
     }
 
-    public void setSourceZoneId(Long refZoneId) {
-        this.sourceZoneId = refZoneId;
+    public void setRefFluxId(Long refFluxId) {
+        this.refFluxId = refFluxId;
     }
 
-    public Long getDestZoneId() {
-        return destZoneId;
+    public Long getRefZoneId() {
+        return refZoneId;
     }
 
-    public void setDestZoneId(Long refZoneId) {
-        this.destZoneId = refZoneId;
-    }
-
-    public Long getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Long refFluxId) {
-        this.typeId = refFluxId;
+    public void setRefZoneId(Long refZoneId) {
+        this.refZoneId = refZoneId;
     }
 
     @Override
@@ -178,10 +168,9 @@ public class FluxDTO implements Serializable {
             ", destIP='" + getDestIP() + "'" +
             ", destPort='" + getDestPort() + "'" +
             ", destZone='" + getDestZone() + "'" +
-            ", environnement=" + getEnvironnementId() +
-            ", sourceZone=" + getSourceZoneId() +
-            ", destZone=" + getDestZoneId() +
-            ", type=" + getTypeId() +
+            ", refEnvironnement=" + getRefEnvironnementId() +
+            ", refFlux=" + getRefFluxId() +
+            ", refZone=" + getRefZoneId() +
             "}";
     }
 }

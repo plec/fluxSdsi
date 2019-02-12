@@ -53,22 +53,22 @@ entity Flux {
 }
 
 relationship OneToMany {
-	RefEnvironnement{code} to Flux{environnement}
+	RefEnvironnement{code} to Flux
 }
 relationship OneToMany {
-	RefZone{code} to Flux{sourceZone}
+	RefZone{code} to Flux
 }
 relationship OneToMany {
-	RefZone{code} to Flux{destZone}
+	RefZone{code} to Flux
 }
 relationship OneToMany {
-	RefFlux{code} to Flux{type}
+	RefFlux{code} to Flux
 }
 relationship OneToMany {
-	RefFonction{codeZone} to RefZone{code}
+	RefFonction{codeZone} to RefZone
 }
 relationship OneToMany {
-	RefTypeFonction{code} to RefFonction{codeFonction}
+	RefTypeFonction{code} to RefFonction
 }
 
 

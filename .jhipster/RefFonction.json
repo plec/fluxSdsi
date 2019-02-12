@@ -32,17 +32,16 @@
     ],
     "relationships": [
         {
+            "relationshipName": "refTypeFonction",
+            "otherEntityName": "refTypeFonction",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "codeZone",
             "otherEntityName": "refZone",
-            "otherEntityRelationshipName": "code"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "codeFonction",
-            "otherEntityName": "refTypeFonction",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "code"
+            "otherEntityRelationshipName": "refFonction"
         }
     ],
     "changelogDate": "20190212144238",

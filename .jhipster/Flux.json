@@ -54,32 +54,22 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "environnement",
+            "relationshipName": "refEnvironnement",
             "otherEntityName": "refEnvironnement",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "code"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "sourceZone",
-            "otherEntityName": "refZone",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "code"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "destZone",
-            "otherEntityName": "refZone",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "code"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "type",
+            "relationshipName": "refFlux",
             "otherEntityName": "refFlux",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "code"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "refZone",
+            "otherEntityName": "refZone",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190212144241",

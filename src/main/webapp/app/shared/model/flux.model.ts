@@ -8,10 +8,9 @@ export interface IFlux {
     destIP?: string;
     destPort?: string;
     destZone?: string;
-    environnementId?: number;
-    sourceZoneId?: number;
-    destZoneId?: number;
-    typeId?: number;
+    refEnvironnementId?: number;
+    refFluxId?: number;
+    refZoneId?: number;
 }
 
 export class Flux implements IFlux {
@@ -25,9 +24,8 @@ export class Flux implements IFlux {
         public destIP?: string,
         public destPort?: string,
         public destZone?: string,
-        public environnementId?: number,
-        public sourceZoneId?: number,
-        public destZoneId?: number,
-        public typeId?: number
+        public refEnvironnementId?: number,
+        public refFluxId?: number,
+        public refZoneId?: number
     ) {}
 }

@@ -8,19 +8,17 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Flux and its DTO FluxDTO.
  */
-@Mapper(componentModel = "spring", uses = {RefEnvironnementMapper.class, RefZoneMapper.class, RefFluxMapper.class})
+@Mapper(componentModel = "spring", uses = {RefEnvironnementMapper.class, RefFluxMapper.class, RefZoneMapper.class})
 public interface FluxMapper extends EntityMapper<FluxDTO, Flux> {
 
-    @Mapping(source = "environnement.id", target = "environnementId")
-    @Mapping(source = "sourceZone.id", target = "sourceZoneId")
-    @Mapping(source = "destZone.id", target = "destZoneId")
-    @Mapping(source = "type.id", target = "typeId")
+    @Mapping(source = "refEnvironnement.id", target = "refEnvironnementId")
+    @Mapping(source = "refFlux.id", target = "refFluxId")
+    @Mapping(source = "refZone.id", target = "refZoneId")
     FluxDTO toDto(Flux flux);
 
-    @Mapping(source = "environnementId", target = "environnement")
-    @Mapping(source = "sourceZoneId", target = "sourceZone")
-    @Mapping(source = "destZoneId", target = "destZone")
-    @Mapping(source = "typeId", target = "type")
+    @Mapping(source = "refEnvironnementId", target = "refEnvironnement")
+    @Mapping(source = "refFluxId", target = "refFlux")
+    @Mapping(source = "refZoneId", target = "refZone")
     Flux toEntity(FluxDTO fluxDTO);
 
     default Flux fromId(Long id) {

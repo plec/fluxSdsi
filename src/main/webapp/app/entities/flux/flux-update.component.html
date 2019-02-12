@@ -87,31 +87,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_environnement">Environnement</label>
-                    <select class="form-control" id="field_environnement" name="environnement" [(ngModel)]="flux.environnementId" >
+                    <label class="form-control-label" for="field_refEnvironnement">Ref Environnement</label>
+                    <select class="form-control" id="field_refEnvironnement" name="refEnvironnement" [(ngModel)]="flux.refEnvironnementId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="refEnvironnementOption.id" *ngFor="let refEnvironnementOption of refenvironnements; trackBy: trackRefEnvironnementById">{{refEnvironnementOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_sourceZone">Source Zone</label>
-                    <select class="form-control" id="field_sourceZone" name="sourceZone" [(ngModel)]="flux.sourceZoneId" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="refZoneOption.id" *ngFor="let refZoneOption of refzones; trackBy: trackRefZoneById">{{refZoneOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_destZone">Dest Zone</label>
-                    <select class="form-control" id="field_destZone" name="destZone" [(ngModel)]="flux.destZoneId" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="refZoneOption.id" *ngFor="let refZoneOption of refzones; trackBy: trackRefZoneById">{{refZoneOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_type">Type</label>
-                    <select class="form-control" id="field_type" name="type" [(ngModel)]="flux.typeId" >
+                    <label class="form-control-label" for="field_refFlux">Ref Flux</label>
+                    <select class="form-control" id="field_refFlux" name="refFlux" [(ngModel)]="flux.refFluxId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="refFluxOption.id" *ngFor="let refFluxOption of reffluxes; trackBy: trackRefFluxById">{{refFluxOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_refZone">Ref Zone</label>
+                    <select class="form-control" id="field_refZone" name="refZone" [(ngModel)]="flux.refZoneId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refZoneOption.id" *ngFor="let refZoneOption of refzones; trackBy: trackRefZoneById">{{refZoneOption.id}}</option>
                     </select>
                 </div>
             </div>

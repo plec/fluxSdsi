@@ -19,7 +19,7 @@
             <th jhiSortBy="codeZone"><span>Code Zone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="codeFonction"><span>Code Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="libelle"><span>Libelle</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="codeFonctionId"><span>Code Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="refTypeFonctionId"><span>Ref Type Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -31,8 +31,8 @@
                 <td>{{refFonction.codeFonction}}</td>
                 <td>{{refFonction.libelle}}</td>
                 <td>
-                    <div *ngIf="refFonction.codeFonctionId">
-                        <a [routerLink]="['../ref-type-fonction', refFonction.codeFonctionId , 'view' ]" >{{refFonction.codeFonctionId}}</a>
+                    <div *ngIf="refFonction.refTypeFonctionId">
+                        <a [routerLink]="['../ref-type-fonction', refFonction.refTypeFonctionId , 'view' ]" >{{refFonction.refTypeFonctionId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

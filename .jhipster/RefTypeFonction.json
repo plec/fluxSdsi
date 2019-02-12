@@ -21,7 +21,7 @@
             "relationshipType": "one-to-many",
             "relationshipName": "code",
             "otherEntityName": "refFonction",
-            "otherEntityRelationshipName": "codeFonction"
+            "otherEntityRelationshipName": "refTypeFonction"
         }
     ],
     "changelogDate": "20190212144237",

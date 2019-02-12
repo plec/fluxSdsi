@@ -29,7 +29,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="code_id" type="bigint">
+            <column name="ref_fonction_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -21,10 +21,10 @@
                 <dd>
                     <span>{{refFonction.libelle}}</span>
                 </dd>
-                <dt><span>Code Fonction</span></dt>
+                <dt><span>Ref Type Fonction</span></dt>
                 <dd>
-                    <div *ngIf="refFonction.codeFonctionId">
-                        <a [routerLink]="['/ref-type-fonction', refFonction.codeFonctionId, 'view']">{{refFonction.codeFonctionId}}</a>
+                    <div *ngIf="refFonction.refTypeFonctionId">
+                        <a [routerLink]="['/ref-type-fonction', refFonction.refTypeFonctionId, 'view']">{{refFonction.refTypeFonctionId}}</a>
                     </div>
                 </dd>
             </dl>

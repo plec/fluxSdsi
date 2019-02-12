@@ -53,19 +53,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="environnement_id" type="bigint">
+            <column name="ref_environnement_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="source_zone_id" type="bigint">
+            <column name="ref_flux_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="dest_zone_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="type_id" type="bigint">
+            <column name="ref_zone_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

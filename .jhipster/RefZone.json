@@ -18,23 +18,16 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "code",
-            "otherEntityName": "flux",
-            "otherEntityRelationshipName": "sourceZone"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "code",
-            "otherEntityName": "flux",
-            "otherEntityRelationshipName": "destZone"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "code",
+            "relationshipName": "refFonction",
             "otherEntityName": "refFonction",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "codeZone"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "flux",
+            "otherEntityRelationshipName": "refZone"
         }
     ],
     "changelogDate": "20190212144239",

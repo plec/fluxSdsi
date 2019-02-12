@@ -8,10 +8,10 @@ import { IFlux } from 'app/shared/model/flux.model';
 import { FluxService } from './flux.service';
 import { IRefEnvironnement } from 'app/shared/model/ref-environnement.model';
 import { RefEnvironnementService } from 'app/entities/ref-environnement';
-import { IRefZone } from 'app/shared/model/ref-zone.model';
-import { RefZoneService } from 'app/entities/ref-zone';
 import { IRefFlux } from 'app/shared/model/ref-flux.model';
 import { RefFluxService } from 'app/entities/ref-flux';
+import { IRefZone } from 'app/shared/model/ref-zone.model';
+import { RefZoneService } from 'app/entities/ref-zone';
 
 @Component({
     selector: 'jhi-flux-update',
@@ -23,16 +23,16 @@ export class FluxUpdateComponent implements OnInit {
 
     refenvironnements: IRefEnvironnement[];
 
-    refzones: IRefZone[];
-
     reffluxes: IRefFlux[];
+
+    refzones: IRefZone[];
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected fluxService: FluxService,
         protected refEnvironnementService: RefEnvironnementService,
-        protected refZoneService: RefZoneService,
         protected refFluxService: RefFluxService,
+        protected refZoneService: RefZoneService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -48,13 +48,6 @@ export class FluxUpdateComponent implements OnInit {
                 map((response: HttpResponse<IRefEnvironnement[]>) => response.body)
             )
             .subscribe((res: IRefEnvironnement[]) => (this.refenvironnements = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.refZoneService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IRefZone[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IRefZone[]>) => response.body)
-            )
-            .subscribe((res: IRefZone[]) => (this.refzones = res), (res: HttpErrorResponse) => this.onError(res.message));
         this.refFluxService
             .query()
             .pipe(
@@ -62,6 +55,13 @@ export class FluxUpdateComponent implements OnInit {
                 map((response: HttpResponse<IRefFlux[]>) => response.body)
             )
             .subscribe((res: IRefFlux[]) => (this.reffluxes = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.refZoneService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IRefZone[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IRefZone[]>) => response.body)
+            )
+            .subscribe((res: IRefZone[]) => (this.refzones = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -98,11 +98,11 @@ export class FluxUpdateComponent implements OnInit {
         return item.id;
     }
 
-    trackRefZoneById(index: number, item: IRefZone) {
+    trackRefFluxById(index: number, item: IRefFlux) {
         return item.id;
     }
 
-    trackRefFluxById(index: number, item: IRefFlux) {
+    trackRefZoneById(index: number, item: IRefZone) {
         return item.id;
     }
 }

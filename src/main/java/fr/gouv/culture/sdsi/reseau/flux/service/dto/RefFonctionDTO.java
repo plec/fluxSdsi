@@ -23,7 +23,7 @@ public class RefFonctionDTO implements Serializable {
     private String libelle;
 
 
-    private Long codeFonctionId;
+    private Long refTypeFonctionId;
 
     public Long getId() {
         return id;
@@ -65,12 +65,12 @@ public class RefFonctionDTO implements Serializable {
         this.libelle = libelle;
     }
 
-    public Long getCodeFonctionId() {
-        return codeFonctionId;
+    public Long getRefTypeFonctionId() {
+        return refTypeFonctionId;
     }
 
-    public void setCodeFonctionId(Long refTypeFonctionId) {
-        this.codeFonctionId = refTypeFonctionId;
+    public void setRefTypeFonctionId(Long refTypeFonctionId) {
+        this.refTypeFonctionId = refTypeFonctionId;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class RefFonctionDTO implements Serializable {
             ", codeZone='" + getCodeZone() + "'" +
             ", codeFonction='" + getCodeFonction() + "'" +
             ", libelle='" + getLibelle() + "'" +
-            ", codeFonction=" + getCodeFonctionId() +
+            ", refTypeFonction=" + getRefTypeFonctionId() +
             "}";
     }
 }
