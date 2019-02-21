@@ -8,9 +8,9 @@
     -->
     <changeSet id="20190212144238-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="ref_type_fonction_id"
+        <addForeignKeyConstraint baseColumnNames="code_type_fonction_id"
                                  baseTableName="ref_fonction"
-                                 constraintName="fk_ref_fonction_ref_type_fonction_id"
+                                 constraintName="fk_ref_fonction_code_type_fonction_id"
                                  referencedColumnNames="id"
                                  referencedTableName="ref_type_fonction"/>
 

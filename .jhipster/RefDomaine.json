@@ -19,7 +19,7 @@
     "relationships": [],
     "changelogDate": "20190212144235",
     "entityTableName": "ref_domaine",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

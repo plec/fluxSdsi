@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="refMatriceFlux">
+            <h2><span>Ref Matrice Flux</span> {{refMatriceFlux.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Environnement</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.environnement}}</span>
+                </dd>
+                <dt><span>Type Flux</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.typeFlux}}</span>
+                </dd>
+                <dt><span>Source Vlan</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.sourceVlan}}</span>
+                </dd>
+                <dt><span>Port</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.port}}</span>
+                </dd>
+                <dt><span>Dest Vlan</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.destVlan}}</span>
+                </dd>
+                <dt><span>Type Authorisation</span></dt>
+                <dd>
+                    <span>{{refMatriceFlux.typeAuthorisation}}</span>
+                </dd>
+                <dt><span>Dest Vlan</span></dt>
+                <dd>
+                    <div *ngIf="refMatriceFlux.destVlanId">
+                        <a [routerLink]="['/ref-vlan', refMatriceFlux.destVlanId, 'view']">{{refMatriceFlux.destVlanId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Source Vlan</span></dt>
+                <dd>
+                    <div *ngIf="refMatriceFlux.sourceVlanId">
+                        <a [routerLink]="['/ref-vlan', refMatriceFlux.sourceVlanId, 'view']">{{refMatriceFlux.sourceVlanId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Type Authorisation</span></dt>
+                <dd>
+                    <div *ngIf="refMatriceFlux.typeAuthorisationId">
+                        <a [routerLink]="['/ref-type-authorisation', refMatriceFlux.typeAuthorisationId, 'view']">{{refMatriceFlux.typeAuthorisationId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/ref-matrice-flux', refMatriceFlux.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,6 @@ package fr.gouv.culture.sdsi.reseau.flux.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -37,13 +36,9 @@ public class RefZone implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @ManyToOne
-    @JsonIgnoreProperties("codeZones")
-    private RefFonction refFonction;
-
-    @OneToMany(mappedBy = "refZone")
+    @OneToMany(mappedBy = "codeZone")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Flux> codes = new HashSet<>();
+    private Set<RefVlan> codes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -79,42 +74,29 @@ public class RefZone implements Serializable {
         this.libelle = libelle;
     }
 
-    public RefFonction getRefFonction() {
-        return refFonction;
-    }
-
-    public RefZone refFonction(RefFonction refFonction) {
-        this.refFonction = refFonction;
-        return this;
-    }
-
-    public void setRefFonction(RefFonction refFonction) {
-        this.refFonction = refFonction;
-    }
-
-    public Set<Flux> getCodes() {
+    public Set<RefVlan> getCodes() {
         return codes;
     }
 
-    public RefZone codes(Set<Flux> fluxes) {
-        this.codes = fluxes;
+    public RefZone codes(Set<RefVlan> refVlans) {
+        this.codes = refVlans;
         return this;
     }
 
-    public RefZone addCode(Flux flux) {
-        this.codes.add(flux);
-        flux.setRefZone(this);
+    public RefZone addCode(RefVlan refVlan) {
+        this.codes.add(refVlan);
+        refVlan.setCodeZone(this);
         return this;
     }
 
-    public RefZone removeCode(Flux flux) {
-        this.codes.remove(flux);
-        flux.setRefZone(null);
+    public RefZone removeCode(RefVlan refVlan) {
+        this.codes.remove(refVlan);
+        refVlan.setCodeZone(null);
         return this;
     }
 
-    public void setCodes(Set<Flux> fluxes) {
-        this.codes = fluxes;
+    public void setCodes(Set<RefVlan> refVlans) {
+        this.codes = refVlans;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

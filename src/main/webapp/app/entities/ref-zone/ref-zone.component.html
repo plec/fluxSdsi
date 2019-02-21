@@ -17,7 +17,6 @@
             <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="code"><span>Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="libelle"><span>Libelle</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="refFonction.id"><span>Ref Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -26,11 +25,6 @@
                 <td><a [routerLink]="['/ref-zone', refZone.id, 'view' ]">{{refZone.id}}</a></td>
                 <td>{{refZone.code}}</td>
                 <td>{{refZone.libelle}}</td>
-                <td>
-                    <div *ngIf="refZone.refFonction">
-                        <a [routerLink]="['../ref-fonction', refZone.refFonction?.id, 'view' ]" >{{refZone.refFonction?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

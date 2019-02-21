@@ -18,21 +18,15 @@
     ],
     "relationships": [
         {
-            "relationshipName": "refFonction",
-            "otherEntityName": "refFonction",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "one-to-many",
             "relationshipName": "code",
-            "otherEntityName": "flux",
-            "otherEntityRelationshipName": "refZone"
+            "otherEntityName": "refVlan",
+            "otherEntityRelationshipName": "codeZone"
         }
     ],
     "changelogDate": "20190212144239",
     "entityTableName": "ref_zone",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

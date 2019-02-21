@@ -5,6 +5,8 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefFonction;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefFonctionRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefFonctionService;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefFonctionDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefFonctionMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -44,17 +46,14 @@ public class RefFonctionResourceIntTest {
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE_ZONE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE_ZONE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_CODE_FONCTION = "AAAAAAAAAA";
-    private static final String UPDATED_CODE_FONCTION = "BBBBBBBBBB";
-
     private static final String DEFAULT_LIBELLE = "AAAAAAAAAA";
     private static final String UPDATED_LIBELLE = "BBBBBBBBBB";
 
     @Autowired
     private RefFonctionRepository refFonctionRepository;
+
+    @Autowired
+    private RefFonctionMapper refFonctionMapper;
 
     @Autowired
     private RefFonctionService refFonctionService;
@@ -99,8 +98,6 @@ public class RefFonctionResourceIntTest {
     public static RefFonction createEntity(EntityManager em) {
         RefFonction refFonction = new RefFonction()
             .code(DEFAULT_CODE)
-            .codeZone(DEFAULT_CODE_ZONE)
-            .codeFonction(DEFAULT_CODE_FONCTION)
             .libelle(DEFAULT_LIBELLE);
         return refFonction;
     }
@@ -116,9 +113,10 @@ public class RefFonctionResourceIntTest {
         int databaseSizeBeforeCreate = refFonctionRepository.findAll().size();
 
         // Create the RefFonction
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(refFonction);
         restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isCreated());
 
         // Validate the RefFonction in the database
@@ -126,8 +124,6 @@ public class RefFonctionResourceIntTest {
         assertThat(refFonctionList).hasSize(databaseSizeBeforeCreate + 1);
         RefFonction testRefFonction = refFonctionList.get(refFonctionList.size() - 1);
         assertThat(testRefFonction.getCode()).isEqualTo(DEFAULT_CODE);
-        assertThat(testRefFonction.getCodeZone()).isEqualTo(DEFAULT_CODE_ZONE);
-        assertThat(testRefFonction.getCodeFonction()).isEqualTo(DEFAULT_CODE_FONCTION);
         assertThat(testRefFonction.getLibelle()).isEqualTo(DEFAULT_LIBELLE);
     }
 
@@ -138,11 +134,12 @@ public class RefFonctionResourceIntTest {
 
         // Create the RefFonction with an existing ID
         refFonction.setId(1L);
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(refFonction);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefFonction in the database
@@ -158,46 +155,11 @@ public class RefFonctionResourceIntTest {
         refFonction.setCode(null);
 
         // Create the RefFonction, which fails.
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(refFonction);
 
         restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
-            .andExpect(status().isBadRequest());
-
-        List<RefFonction> refFonctionList = refFonctionRepository.findAll();
-        assertThat(refFonctionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCodeZoneIsRequired() throws Exception {
-        int databaseSizeBeforeTest = refFonctionRepository.findAll().size();
-        // set the field null
-        refFonction.setCodeZone(null);
-
-        // Create the RefFonction, which fails.
-
-        restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
-            .andExpect(status().isBadRequest());
-
-        List<RefFonction> refFonctionList = refFonctionRepository.findAll();
-        assertThat(refFonctionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCodeFonctionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = refFonctionRepository.findAll().size();
-        // set the field null
-        refFonction.setCodeFonction(null);
-
-        // Create the RefFonction, which fails.
-
-        restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefFonction> refFonctionList = refFonctionRepository.findAll();
@@ -212,10 +174,11 @@ public class RefFonctionResourceIntTest {
         refFonction.setLibelle(null);
 
         // Create the RefFonction, which fails.
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(refFonction);
 
         restRefFonctionMockMvc.perform(post("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefFonction> refFonctionList = refFonctionRepository.findAll();
@@ -234,8 +197,6 @@ public class RefFonctionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(refFonction.getId().intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].codeZone").value(hasItem(DEFAULT_CODE_ZONE.toString())))
-            .andExpect(jsonPath("$.[*].codeFonction").value(hasItem(DEFAULT_CODE_FONCTION.toString())))
             .andExpect(jsonPath("$.[*].libelle").value(hasItem(DEFAULT_LIBELLE.toString())));
     }
     
@@ -251,8 +212,6 @@ public class RefFonctionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(refFonction.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.codeZone").value(DEFAULT_CODE_ZONE.toString()))
-            .andExpect(jsonPath("$.codeFonction").value(DEFAULT_CODE_FONCTION.toString()))
             .andExpect(jsonPath("$.libelle").value(DEFAULT_LIBELLE.toString()));
     }
 
@@ -268,7 +227,7 @@ public class RefFonctionResourceIntTest {
     @Transactional
     public void updateRefFonction() throws Exception {
         // Initialize the database
-        refFonctionService.save(refFonction);
+        refFonctionRepository.saveAndFlush(refFonction);
 
         int databaseSizeBeforeUpdate = refFonctionRepository.findAll().size();
 
@@ -278,13 +237,12 @@ public class RefFonctionResourceIntTest {
         em.detach(updatedRefFonction);
         updatedRefFonction
             .code(UPDATED_CODE)
-            .codeZone(UPDATED_CODE_ZONE)
-            .codeFonction(UPDATED_CODE_FONCTION)
             .libelle(UPDATED_LIBELLE);
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(updatedRefFonction);
 
         restRefFonctionMockMvc.perform(put("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedRefFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isOk());
 
         // Validate the RefFonction in the database
@@ -292,8 +250,6 @@ public class RefFonctionResourceIntTest {
         assertThat(refFonctionList).hasSize(databaseSizeBeforeUpdate);
         RefFonction testRefFonction = refFonctionList.get(refFonctionList.size() - 1);
         assertThat(testRefFonction.getCode()).isEqualTo(UPDATED_CODE);
-        assertThat(testRefFonction.getCodeZone()).isEqualTo(UPDATED_CODE_ZONE);
-        assertThat(testRefFonction.getCodeFonction()).isEqualTo(UPDATED_CODE_FONCTION);
         assertThat(testRefFonction.getLibelle()).isEqualTo(UPDATED_LIBELLE);
     }
 
@@ -303,11 +259,12 @@ public class RefFonctionResourceIntTest {
         int databaseSizeBeforeUpdate = refFonctionRepository.findAll().size();
 
         // Create the RefFonction
+        RefFonctionDTO refFonctionDTO = refFonctionMapper.toDto(refFonction);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefFonctionMockMvc.perform(put("/api/ref-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefFonction in the database
@@ -319,7 +276,7 @@ public class RefFonctionResourceIntTest {
     @Transactional
     public void deleteRefFonction() throws Exception {
         // Initialize the database
-        refFonctionService.save(refFonction);
+        refFonctionRepository.saveAndFlush(refFonction);
 
         int databaseSizeBeforeDelete = refFonctionRepository.findAll().size();
 
@@ -346,5 +303,28 @@ public class RefFonctionResourceIntTest {
         assertThat(refFonction1).isNotEqualTo(refFonction2);
         refFonction1.setId(null);
         assertThat(refFonction1).isNotEqualTo(refFonction2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(RefFonctionDTO.class);
+        RefFonctionDTO refFonctionDTO1 = new RefFonctionDTO();
+        refFonctionDTO1.setId(1L);
+        RefFonctionDTO refFonctionDTO2 = new RefFonctionDTO();
+        assertThat(refFonctionDTO1).isNotEqualTo(refFonctionDTO2);
+        refFonctionDTO2.setId(refFonctionDTO1.getId());
+        assertThat(refFonctionDTO1).isEqualTo(refFonctionDTO2);
+        refFonctionDTO2.setId(2L);
+        assertThat(refFonctionDTO1).isNotEqualTo(refFonctionDTO2);
+        refFonctionDTO1.setId(null);
+        assertThat(refFonctionDTO1).isNotEqualTo(refFonctionDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(refFonctionMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(refFonctionMapper.fromId(null)).isNull();
     }
 }

@@ -1,0 +1,79 @@
+{
+    "name": "RefMatriceFlux",
+    "fields": [
+        {
+            "fieldName": "environnement",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "typeFlux",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sourceVlan",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "port",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "destVlan",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "typeAuthorisation",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "destVlan",
+            "otherEntityName": "refVlan",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "sourceVlan",
+            "otherEntityName": "refVlan",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "typeAuthorisation",
+            "otherEntityName": "refTypeAuthorisation",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        }
+    ],
+    "changelogDate": "20190221170644",
+    "entityTableName": "ref_matrice_flux",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

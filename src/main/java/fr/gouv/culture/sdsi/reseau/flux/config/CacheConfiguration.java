@@ -52,6 +52,16 @@ public class CacheConfiguration {
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefZone.class.getName() + ".codes", jcacheConfiguration);
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefNumero.class.getName(), jcacheConfiguration);
             cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.Flux.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironement.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefEnvironement.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefVlan.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefVlan.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFlux.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFlux.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.DemandeFlux.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeAuthorisation.class.getName(), jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeAuthorisation.class.getName() + ".codes", jcacheConfiguration);
+            cm.createCache(fr.gouv.culture.sdsi.reseau.flux.domain.RefMatriceFlux.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -3,6 +3,8 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefZoneService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefZone;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefZoneRepository;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefZoneDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefZoneMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,20 +26,25 @@ public class RefZoneServiceImpl implements RefZoneService {
 
     private final RefZoneRepository refZoneRepository;
 
-    public RefZoneServiceImpl(RefZoneRepository refZoneRepository) {
+    private final RefZoneMapper refZoneMapper;
+
+    public RefZoneServiceImpl(RefZoneRepository refZoneRepository, RefZoneMapper refZoneMapper) {
         this.refZoneRepository = refZoneRepository;
+        this.refZoneMapper = refZoneMapper;
     }
 
     /**
      * Save a refZone.
      *
-     * @param refZone the entity to save
+     * @param refZoneDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefZone save(RefZone refZone) {
-        log.debug("Request to save RefZone : {}", refZone);
-        return refZoneRepository.save(refZone);
+    public RefZoneDTO save(RefZoneDTO refZoneDTO) {
+        log.debug("Request to save RefZone : {}", refZoneDTO);
+        RefZone refZone = refZoneMapper.toEntity(refZoneDTO);
+        refZone = refZoneRepository.save(refZone);
+        return refZoneMapper.toDto(refZone);
     }
 
     /**
@@ -48,9 +55,10 @@ public class RefZoneServiceImpl implements RefZoneService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefZone> findAll(Pageable pageable) {
+    public Page<RefZoneDTO> findAll(Pageable pageable) {
         log.debug("Request to get all RefZones");
-        return refZoneRepository.findAll(pageable);
+        return refZoneRepository.findAll(pageable)
+            .map(refZoneMapper::toDto);
     }
 
 
@@ -62,9 +70,10 @@ public class RefZoneServiceImpl implements RefZoneService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefZone> findOne(Long id) {
+    public Optional<RefZoneDTO> findOne(Long id) {
         log.debug("Request to get RefZone : {}", id);
-        return refZoneRepository.findById(id);
+        return refZoneRepository.findById(id)
+            .map(refZoneMapper::toDto);
     }
 
     /**

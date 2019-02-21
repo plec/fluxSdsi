@@ -3,6 +3,8 @@ package fr.gouv.culture.sdsi.reseau.flux.service.impl;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefTypeFonctionService;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFonction;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefTypeFonctionRepository;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefTypeFonctionDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefTypeFonctionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,20 +26,25 @@ public class RefTypeFonctionServiceImpl implements RefTypeFonctionService {
 
     private final RefTypeFonctionRepository refTypeFonctionRepository;
 
-    public RefTypeFonctionServiceImpl(RefTypeFonctionRepository refTypeFonctionRepository) {
+    private final RefTypeFonctionMapper refTypeFonctionMapper;
+
+    public RefTypeFonctionServiceImpl(RefTypeFonctionRepository refTypeFonctionRepository, RefTypeFonctionMapper refTypeFonctionMapper) {
         this.refTypeFonctionRepository = refTypeFonctionRepository;
+        this.refTypeFonctionMapper = refTypeFonctionMapper;
     }
 
     /**
      * Save a refTypeFonction.
      *
-     * @param refTypeFonction the entity to save
+     * @param refTypeFonctionDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public RefTypeFonction save(RefTypeFonction refTypeFonction) {
-        log.debug("Request to save RefTypeFonction : {}", refTypeFonction);
-        return refTypeFonctionRepository.save(refTypeFonction);
+    public RefTypeFonctionDTO save(RefTypeFonctionDTO refTypeFonctionDTO) {
+        log.debug("Request to save RefTypeFonction : {}", refTypeFonctionDTO);
+        RefTypeFonction refTypeFonction = refTypeFonctionMapper.toEntity(refTypeFonctionDTO);
+        refTypeFonction = refTypeFonctionRepository.save(refTypeFonction);
+        return refTypeFonctionMapper.toDto(refTypeFonction);
     }
 
     /**
@@ -48,9 +55,10 @@ public class RefTypeFonctionServiceImpl implements RefTypeFonctionService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefTypeFonction> findAll(Pageable pageable) {
+    public Page<RefTypeFonctionDTO> findAll(Pageable pageable) {
         log.debug("Request to get all RefTypeFonctions");
-        return refTypeFonctionRepository.findAll(pageable);
+        return refTypeFonctionRepository.findAll(pageable)
+            .map(refTypeFonctionMapper::toDto);
     }
 
 
@@ -62,9 +70,10 @@ public class RefTypeFonctionServiceImpl implements RefTypeFonctionService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefTypeFonction> findOne(Long id) {
+    public Optional<RefTypeFonctionDTO> findOne(Long id) {
         log.debug("Request to get RefTypeFonction : {}", id);
-        return refTypeFonctionRepository.findById(id);
+        return refTypeFonctionRepository.findById(id)
+            .map(refTypeFonctionMapper::toDto);
     }
 
     /**

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity RefMatriceFlux.
+    -->
+    <changeSet id="20190221170644-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="dest_vlan_id"
+                                 baseTableName="ref_matrice_flux"
+                                 constraintName="fk_ref_matrice_flux_dest_vlan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_vlan"/>
+
+        <addForeignKeyConstraint baseColumnNames="source_vlan_id"
+                                 baseTableName="ref_matrice_flux"
+                                 constraintName="fk_ref_matrice_flux_source_vlan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_vlan"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_authorisation_id"
+                                 baseTableName="ref_matrice_flux"
+                                 constraintName="fk_ref_matrice_flux_type_authorisation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_type_authorisation"/>
+
+    </changeSet>
+</databaseChangeLog>

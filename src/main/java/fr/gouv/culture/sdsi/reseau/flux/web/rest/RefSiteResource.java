@@ -1,9 +1,9 @@
 package fr.gouv.culture.sdsi.reseau.flux.web.rest;
-import fr.gouv.culture.sdsi.reseau.flux.domain.RefSite;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefSiteService;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.BadRequestAlertException;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.util.HeaderUtil;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.util.PaginationUtil;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefSiteDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,17 +41,17 @@ public class RefSiteResource {
     /**
      * POST  /ref-sites : Create a new refSite.
      *
-     * @param refSite the refSite to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new refSite, or with status 400 (Bad Request) if the refSite has already an ID
+     * @param refSiteDTO the refSiteDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new refSiteDTO, or with status 400 (Bad Request) if the refSite has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/ref-sites")
-    public ResponseEntity<RefSite> createRefSite(@Valid @RequestBody RefSite refSite) throws URISyntaxException {
-        log.debug("REST request to save RefSite : {}", refSite);
-        if (refSite.getId() != null) {
+    public ResponseEntity<RefSiteDTO> createRefSite(@Valid @RequestBody RefSiteDTO refSiteDTO) throws URISyntaxException {
+        log.debug("REST request to save RefSite : {}", refSiteDTO);
+        if (refSiteDTO.getId() != null) {
             throw new BadRequestAlertException("A new refSite cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RefSite result = refSiteService.save(refSite);
+        RefSiteDTO result = refSiteService.save(refSiteDTO);
         return ResponseEntity.created(new URI("/api/ref-sites/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class RefSiteResource {
     /**
      * PUT  /ref-sites : Updates an existing refSite.
      *
-     * @param refSite the refSite to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated refSite,
-     * or with status 400 (Bad Request) if the refSite is not valid,
-     * or with status 500 (Internal Server Error) if the refSite couldn't be updated
+     * @param refSiteDTO the refSiteDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated refSiteDTO,
+     * or with status 400 (Bad Request) if the refSiteDTO is not valid,
+     * or with status 500 (Internal Server Error) if the refSiteDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/ref-sites")
-    public ResponseEntity<RefSite> updateRefSite(@Valid @RequestBody RefSite refSite) throws URISyntaxException {
-        log.debug("REST request to update RefSite : {}", refSite);
-        if (refSite.getId() == null) {
+    public ResponseEntity<RefSiteDTO> updateRefSite(@Valid @RequestBody RefSiteDTO refSiteDTO) throws URISyntaxException {
+        log.debug("REST request to update RefSite : {}", refSiteDTO);
+        if (refSiteDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        RefSite result = refSiteService.save(refSite);
+        RefSiteDTO result = refSiteService.save(refSiteDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, refSite.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, refSiteDTO.getId().toString()))
             .body(result);
     }
 
@@ -85,9 +85,9 @@ public class RefSiteResource {
      * @return the ResponseEntity with status 200 (OK) and the list of refSites in body
      */
     @GetMapping("/ref-sites")
-    public ResponseEntity<List<RefSite>> getAllRefSites(Pageable pageable) {
+    public ResponseEntity<List<RefSiteDTO>> getAllRefSites(Pageable pageable) {
         log.debug("REST request to get a page of RefSites");
-        Page<RefSite> page = refSiteService.findAll(pageable);
+        Page<RefSiteDTO> page = refSiteService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ref-sites");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -95,20 +95,20 @@ public class RefSiteResource {
     /**
      * GET  /ref-sites/:id : get the "id" refSite.
      *
-     * @param id the id of the refSite to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the refSite, or with status 404 (Not Found)
+     * @param id the id of the refSiteDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the refSiteDTO, or with status 404 (Not Found)
      */
     @GetMapping("/ref-sites/{id}")
-    public ResponseEntity<RefSite> getRefSite(@PathVariable Long id) {
+    public ResponseEntity<RefSiteDTO> getRefSite(@PathVariable Long id) {
         log.debug("REST request to get RefSite : {}", id);
-        Optional<RefSite> refSite = refSiteService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(refSite);
+        Optional<RefSiteDTO> refSiteDTO = refSiteService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(refSiteDTO);
     }
 
     /**
      * DELETE  /ref-sites/:id : delete the "id" refSite.
      *
-     * @param id the id of the refSite to delete
+     * @param id the id of the refSiteDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/ref-sites/{id}")

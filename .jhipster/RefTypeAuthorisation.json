@@ -1,0 +1,36 @@
+{
+    "name": "RefTypeAuthorisation",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "libelle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "refMatriceFlux",
+            "otherEntityRelationshipName": "typeAuthorisation"
+        }
+    ],
+    "changelogDate": "20190221170643",
+    "entityTableName": "ref_type_authorisation",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

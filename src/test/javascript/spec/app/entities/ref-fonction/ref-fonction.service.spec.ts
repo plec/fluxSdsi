@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(RefFonctionService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new RefFonction(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new RefFonction(0, 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -56,8 +56,6 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         code: 'BBBBBB',
-                        codeZone: 'BBBBBB',
-                        codeFonction: 'BBBBBB',
                         libelle: 'BBBBBB'
                     },
                     elemDefault
@@ -76,8 +74,6 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         code: 'BBBBBB',
-                        codeZone: 'BBBBBB',
-                        codeFonction: 'BBBBBB',
                         libelle: 'BBBBBB'
                     },
                     elemDefault
