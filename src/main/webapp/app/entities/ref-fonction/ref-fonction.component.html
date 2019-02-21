@@ -16,10 +16,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="code"><span>Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="codeZone"><span>Code Zone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="codeFonction"><span>Code Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="libelle"><span>Libelle</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="refTypeFonction.id"><span>Ref Type Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="codeTypeFonctionId"><span>Code Type Fonction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -27,12 +25,10 @@
             <tr *ngFor="let refFonction of refFonctions ;trackBy: trackId">
                 <td><a [routerLink]="['/ref-fonction', refFonction.id, 'view' ]">{{refFonction.id}}</a></td>
                 <td>{{refFonction.code}}</td>
-                <td>{{refFonction.codeZone}}</td>
-                <td>{{refFonction.codeFonction}}</td>
                 <td>{{refFonction.libelle}}</td>
                 <td>
-                    <div *ngIf="refFonction.refTypeFonction">
-                        <a [routerLink]="['../ref-type-fonction', refFonction.refTypeFonction?.id, 'view' ]" >{{refFonction.refTypeFonction?.id}}</a>
+                    <div *ngIf="refFonction.codeTypeFonctionId">
+                        <a [routerLink]="['../ref-type-fonction', refFonction.codeTypeFonctionId , 'view' ]" >{{refFonction.codeTypeFonctionId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

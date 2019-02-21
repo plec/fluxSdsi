@@ -1,0 +1,111 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-ref-matrice-flux-heading">Create or edit a Ref Matrice Flux</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!refMatriceFlux.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="refMatriceFlux.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_environnement">Environnement</label>
+                    <input type="text" class="form-control" name="environnement" id="field_environnement"
+                        [(ngModel)]="refMatriceFlux.environnement" required/>
+                    <div [hidden]="!(editForm.controls.environnement?.dirty && editForm.controls.environnement?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.environnement?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeFlux">Type Flux</label>
+                    <input type="text" class="form-control" name="typeFlux" id="field_typeFlux"
+                        [(ngModel)]="refMatriceFlux.typeFlux" required/>
+                    <div [hidden]="!(editForm.controls.typeFlux?.dirty && editForm.controls.typeFlux?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.typeFlux?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceVlan">Source Vlan</label>
+                    <input type="text" class="form-control" name="sourceVlan" id="field_sourceVlan"
+                        [(ngModel)]="refMatriceFlux.sourceVlan" required/>
+                    <div [hidden]="!(editForm.controls.sourceVlan?.dirty && editForm.controls.sourceVlan?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sourceVlan?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_port">Port</label>
+                    <input type="text" class="form-control" name="port" id="field_port"
+                        [(ngModel)]="refMatriceFlux.port" required/>
+                    <div [hidden]="!(editForm.controls.port?.dirty && editForm.controls.port?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.port?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destVlan">Dest Vlan</label>
+                    <input type="text" class="form-control" name="destVlan" id="field_destVlan"
+                        [(ngModel)]="refMatriceFlux.destVlan" required/>
+                    <div [hidden]="!(editForm.controls.destVlan?.dirty && editForm.controls.destVlan?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.destVlan?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeAuthorisation">Type Authorisation</label>
+                    <input type="text" class="form-control" name="typeAuthorisation" id="field_typeAuthorisation"
+                        [(ngModel)]="refMatriceFlux.typeAuthorisation" required/>
+                    <div [hidden]="!(editForm.controls.typeAuthorisation?.dirty && editForm.controls.typeAuthorisation?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.typeAuthorisation?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destVlan">Dest Vlan</label>
+                    <select class="form-control" id="field_destVlan" name="destVlan" [(ngModel)]="refMatriceFlux.destVlanId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refVlanOption.id" *ngFor="let refVlanOption of refvlans; trackBy: trackRefVlanById">{{refVlanOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceVlan">Source Vlan</label>
+                    <select class="form-control" id="field_sourceVlan" name="sourceVlan" [(ngModel)]="refMatriceFlux.sourceVlanId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refVlanOption.id" *ngFor="let refVlanOption of refvlans; trackBy: trackRefVlanById">{{refVlanOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeAuthorisation">Type Authorisation</label>
+                    <select class="form-control" id="field_typeAuthorisation" name="typeAuthorisation" [(ngModel)]="refMatriceFlux.typeAuthorisationId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refTypeAuthorisationOption.id" *ngFor="let refTypeAuthorisationOption of reftypeauthorisations; trackBy: trackRefTypeAuthorisationById">{{refTypeAuthorisationOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -21,12 +21,12 @@
             "relationshipType": "one-to-many",
             "relationshipName": "code",
             "otherEntityName": "refFonction",
-            "otherEntityRelationshipName": "refTypeFonction"
+            "otherEntityRelationshipName": "codeTypeFonction"
         }
     ],
     "changelogDate": "20190212144237",
     "entityTableName": "ref_type_fonction",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

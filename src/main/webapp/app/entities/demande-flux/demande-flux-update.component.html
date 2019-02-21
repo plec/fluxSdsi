@@ -1,0 +1,128 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-demande-flux-heading">Create or edit a Demande Flux</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!demandeFlux.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="demandeFlux.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_environnement">Environnement</label>
+                    <input type="text" class="form-control" name="environnement" id="field_environnement"
+                        [(ngModel)]="demandeFlux.environnement" required/>
+                    <div [hidden]="!(editForm.controls.environnement?.dirty && editForm.controls.environnement?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.environnement?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeFlux">Type Flux</label>
+                    <input type="text" class="form-control" name="typeFlux" id="field_typeFlux"
+                        [(ngModel)]="demandeFlux.typeFlux" required/>
+                    <div [hidden]="!(editForm.controls.typeFlux?.dirty && editForm.controls.typeFlux?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.typeFlux?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceIP">Source IP</label>
+                    <input type="text" class="form-control" name="sourceIP" id="field_sourceIP"
+                        [(ngModel)]="demandeFlux.sourceIP" required/>
+                    <div [hidden]="!(editForm.controls.sourceIP?.dirty && editForm.controls.sourceIP?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sourceIP?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourcePort">Source Port</label>
+                    <input type="text" class="form-control" name="sourcePort" id="field_sourcePort"
+                        [(ngModel)]="demandeFlux.sourcePort" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceVlan">Source Vlan</label>
+                    <input type="text" class="form-control" name="sourceVlan" id="field_sourceVlan"
+                        [(ngModel)]="demandeFlux.sourceVlan" required/>
+                    <div [hidden]="!(editForm.controls.sourceVlan?.dirty && editForm.controls.sourceVlan?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sourceVlan?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destIP">Dest IP</label>
+                    <input type="text" class="form-control" name="destIP" id="field_destIP"
+                        [(ngModel)]="demandeFlux.destIP" required/>
+                    <div [hidden]="!(editForm.controls.destIP?.dirty && editForm.controls.destIP?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.destIP?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destPort">Dest Port</label>
+                    <input type="text" class="form-control" name="destPort" id="field_destPort"
+                        [(ngModel)]="demandeFlux.destPort" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destVlan">Dest Vlan</label>
+                    <input type="text" class="form-control" name="destVlan" id="field_destVlan"
+                        [(ngModel)]="demandeFlux.destVlan" required/>
+                    <div [hidden]="!(editForm.controls.destVlan?.dirty && editForm.controls.destVlan?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.destVlan?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_environnement">Environnement</label>
+                    <select class="form-control" id="field_environnement" name="environnement" [(ngModel)]="demandeFlux.environnementId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refEnvironementOption.id" *ngFor="let refEnvironementOption of refenvironements; trackBy: trackRefEnvironementById">{{refEnvironementOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_destVlan">Dest Vlan</label>
+                    <select class="form-control" id="field_destVlan" name="destVlan" [(ngModel)]="demandeFlux.destVlanId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refVlanOption.id" *ngFor="let refVlanOption of refvlans; trackBy: trackRefVlanById">{{refVlanOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceVlan">Source Vlan</label>
+                    <select class="form-control" id="field_sourceVlan" name="sourceVlan" [(ngModel)]="demandeFlux.sourceVlanId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refVlanOption.id" *ngFor="let refVlanOption of refvlans; trackBy: trackRefVlanById">{{refVlanOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeFlux">Type Flux</label>
+                    <select class="form-control" id="field_typeFlux" name="typeFlux" [(ngModel)]="demandeFlux.typeFluxId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="refTypeFluxOption.id" *ngFor="let refTypeFluxOption of reftypefluxes; trackBy: trackRefTypeFluxById">{{refTypeFluxOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

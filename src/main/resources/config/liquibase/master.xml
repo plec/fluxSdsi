@@ -14,9 +14,18 @@
     <include file="config/liquibase/changelog/20190212144239_added_entity_RefZone.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190212144240_added_entity_RefNumero.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190212144241_added_entity_Flux.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170633_added_entity_RefEnvironement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170635_added_entity_RefVlan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170637_added_entity_RefTypeFlux.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170642_added_entity_DemandeFlux.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170643_added_entity_RefTypeAuthorisation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170644_added_entity_RefMatriceFlux.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190212144238_added_entity_constraints_RefFonction.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190212144239_added_entity_constraints_RefZone.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190212144241_added_entity_constraints_Flux.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170635_added_entity_constraints_RefVlan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170642_added_entity_constraints_DemandeFlux.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190221170644_added_entity_constraints_RefMatriceFlux.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

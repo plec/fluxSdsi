@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="demandeFlux">
+            <h2><span>Demande Flux</span> {{demandeFlux.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Environnement</span></dt>
+                <dd>
+                    <span>{{demandeFlux.environnement}}</span>
+                </dd>
+                <dt><span>Type Flux</span></dt>
+                <dd>
+                    <span>{{demandeFlux.typeFlux}}</span>
+                </dd>
+                <dt><span>Source IP</span></dt>
+                <dd>
+                    <span>{{demandeFlux.sourceIP}}</span>
+                </dd>
+                <dt><span>Source Port</span></dt>
+                <dd>
+                    <span>{{demandeFlux.sourcePort}}</span>
+                </dd>
+                <dt><span>Source Vlan</span></dt>
+                <dd>
+                    <span>{{demandeFlux.sourceVlan}}</span>
+                </dd>
+                <dt><span>Dest IP</span></dt>
+                <dd>
+                    <span>{{demandeFlux.destIP}}</span>
+                </dd>
+                <dt><span>Dest Port</span></dt>
+                <dd>
+                    <span>{{demandeFlux.destPort}}</span>
+                </dd>
+                <dt><span>Dest Vlan</span></dt>
+                <dd>
+                    <span>{{demandeFlux.destVlan}}</span>
+                </dd>
+                <dt><span>Environnement</span></dt>
+                <dd>
+                    <div *ngIf="demandeFlux.environnementId">
+                        <a [routerLink]="['/ref-environement', demandeFlux.environnementId, 'view']">{{demandeFlux.environnementId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Dest Vlan</span></dt>
+                <dd>
+                    <div *ngIf="demandeFlux.destVlanId">
+                        <a [routerLink]="['/ref-vlan', demandeFlux.destVlanId, 'view']">{{demandeFlux.destVlanId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Source Vlan</span></dt>
+                <dd>
+                    <div *ngIf="demandeFlux.sourceVlanId">
+                        <a [routerLink]="['/ref-vlan', demandeFlux.sourceVlanId, 'view']">{{demandeFlux.sourceVlanId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Type Flux</span></dt>
+                <dd>
+                    <div *ngIf="demandeFlux.typeFluxId">
+                        <a [routerLink]="['/ref-type-flux', demandeFlux.typeFluxId, 'view']">{{demandeFlux.typeFluxId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/demande-flux', demandeFlux.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

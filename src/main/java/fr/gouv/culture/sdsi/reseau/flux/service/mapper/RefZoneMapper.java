@@ -8,13 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity RefZone and its DTO RefZoneDTO.
  */
-@Mapper(componentModel = "spring", uses = {RefFonctionMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface RefZoneMapper extends EntityMapper<RefZoneDTO, RefZone> {
 
-    @Mapping(source = "refFonction.id", target = "refFonctionId")
-    RefZoneDTO toDto(RefZone refZone);
 
-    @Mapping(source = "refFonctionId", target = "refFonction")
     @Mapping(target = "codes", ignore = true)
     RefZone toEntity(RefZoneDTO refZoneDTO);
 

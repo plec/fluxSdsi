@@ -5,6 +5,8 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefTypeFonction;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefTypeFonctionRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefTypeFonctionService;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefTypeFonctionDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefTypeFonctionMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -49,6 +51,9 @@ public class RefTypeFonctionResourceIntTest {
 
     @Autowired
     private RefTypeFonctionRepository refTypeFonctionRepository;
+
+    @Autowired
+    private RefTypeFonctionMapper refTypeFonctionMapper;
 
     @Autowired
     private RefTypeFonctionService refTypeFonctionService;
@@ -108,9 +113,10 @@ public class RefTypeFonctionResourceIntTest {
         int databaseSizeBeforeCreate = refTypeFonctionRepository.findAll().size();
 
         // Create the RefTypeFonction
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(refTypeFonction);
         restRefTypeFonctionMockMvc.perform(post("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isCreated());
 
         // Validate the RefTypeFonction in the database
@@ -128,11 +134,12 @@ public class RefTypeFonctionResourceIntTest {
 
         // Create the RefTypeFonction with an existing ID
         refTypeFonction.setId(1L);
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(refTypeFonction);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefTypeFonctionMockMvc.perform(post("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefTypeFonction in the database
@@ -148,10 +155,11 @@ public class RefTypeFonctionResourceIntTest {
         refTypeFonction.setCode(null);
 
         // Create the RefTypeFonction, which fails.
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(refTypeFonction);
 
         restRefTypeFonctionMockMvc.perform(post("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefTypeFonction> refTypeFonctionList = refTypeFonctionRepository.findAll();
@@ -166,10 +174,11 @@ public class RefTypeFonctionResourceIntTest {
         refTypeFonction.setLibelle(null);
 
         // Create the RefTypeFonction, which fails.
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(refTypeFonction);
 
         restRefTypeFonctionMockMvc.perform(post("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefTypeFonction> refTypeFonctionList = refTypeFonctionRepository.findAll();
@@ -218,7 +227,7 @@ public class RefTypeFonctionResourceIntTest {
     @Transactional
     public void updateRefTypeFonction() throws Exception {
         // Initialize the database
-        refTypeFonctionService.save(refTypeFonction);
+        refTypeFonctionRepository.saveAndFlush(refTypeFonction);
 
         int databaseSizeBeforeUpdate = refTypeFonctionRepository.findAll().size();
 
@@ -229,10 +238,11 @@ public class RefTypeFonctionResourceIntTest {
         updatedRefTypeFonction
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(updatedRefTypeFonction);
 
         restRefTypeFonctionMockMvc.perform(put("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedRefTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isOk());
 
         // Validate the RefTypeFonction in the database
@@ -249,11 +259,12 @@ public class RefTypeFonctionResourceIntTest {
         int databaseSizeBeforeUpdate = refTypeFonctionRepository.findAll().size();
 
         // Create the RefTypeFonction
+        RefTypeFonctionDTO refTypeFonctionDTO = refTypeFonctionMapper.toDto(refTypeFonction);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefTypeFonctionMockMvc.perform(put("/api/ref-type-fonctions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refTypeFonction)))
+            .content(TestUtil.convertObjectToJsonBytes(refTypeFonctionDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefTypeFonction in the database
@@ -265,7 +276,7 @@ public class RefTypeFonctionResourceIntTest {
     @Transactional
     public void deleteRefTypeFonction() throws Exception {
         // Initialize the database
-        refTypeFonctionService.save(refTypeFonction);
+        refTypeFonctionRepository.saveAndFlush(refTypeFonction);
 
         int databaseSizeBeforeDelete = refTypeFonctionRepository.findAll().size();
 
@@ -292,5 +303,28 @@ public class RefTypeFonctionResourceIntTest {
         assertThat(refTypeFonction1).isNotEqualTo(refTypeFonction2);
         refTypeFonction1.setId(null);
         assertThat(refTypeFonction1).isNotEqualTo(refTypeFonction2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(RefTypeFonctionDTO.class);
+        RefTypeFonctionDTO refTypeFonctionDTO1 = new RefTypeFonctionDTO();
+        refTypeFonctionDTO1.setId(1L);
+        RefTypeFonctionDTO refTypeFonctionDTO2 = new RefTypeFonctionDTO();
+        assertThat(refTypeFonctionDTO1).isNotEqualTo(refTypeFonctionDTO2);
+        refTypeFonctionDTO2.setId(refTypeFonctionDTO1.getId());
+        assertThat(refTypeFonctionDTO1).isEqualTo(refTypeFonctionDTO2);
+        refTypeFonctionDTO2.setId(2L);
+        assertThat(refTypeFonctionDTO1).isNotEqualTo(refTypeFonctionDTO2);
+        refTypeFonctionDTO1.setId(null);
+        assertThat(refTypeFonctionDTO1).isNotEqualTo(refTypeFonctionDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(refTypeFonctionMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(refTypeFonctionMapper.fromId(null)).isNull();
     }
 }

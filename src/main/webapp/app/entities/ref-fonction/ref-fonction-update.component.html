@@ -21,28 +21,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_codeZone">Code Zone</label>
-                    <input type="text" class="form-control" name="codeZone" id="field_codeZone"
-                        [(ngModel)]="refFonction.codeZone" required/>
-                    <div [hidden]="!(editForm.controls.codeZone?.dirty && editForm.controls.codeZone?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.codeZone?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_codeFonction">Code Fonction</label>
-                    <input type="text" class="form-control" name="codeFonction" id="field_codeFonction"
-                        [(ngModel)]="refFonction.codeFonction" required/>
-                    <div [hidden]="!(editForm.controls.codeFonction?.dirty && editForm.controls.codeFonction?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.codeFonction?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" for="field_libelle">Libelle</label>
                     <input type="text" class="form-control" name="libelle" id="field_libelle"
                         [(ngModel)]="refFonction.libelle" required/>
@@ -55,10 +33,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_refTypeFonction">Ref Type Fonction</label>
-                    <select class="form-control" id="field_refTypeFonction" name="refTypeFonction" [(ngModel)]="refFonction.refTypeFonction" >
+                    <label class="form-control-label" for="field_codeTypeFonction">Code Type Fonction</label>
+                    <select class="form-control" id="field_codeTypeFonction" name="codeTypeFonction" [(ngModel)]="refFonction.codeTypeFonctionId" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="refTypeFonctionOption.id === refFonction.refTypeFonction?.id ? refFonction.refTypeFonction : refTypeFonctionOption" *ngFor="let refTypeFonctionOption of reftypefonctions; trackBy: trackRefTypeFonctionById">{{refTypeFonctionOption.id}}</option>
+                        <option [ngValue]="refTypeFonctionOption.id" *ngFor="let refTypeFonctionOption of reftypefonctions; trackBy: trackRefTypeFonctionById">{{refTypeFonctionOption.id}}</option>
                     </select>
                 </div>
             </div>

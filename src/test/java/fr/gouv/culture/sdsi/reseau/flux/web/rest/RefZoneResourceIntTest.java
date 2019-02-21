@@ -5,6 +5,8 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefZone;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefZoneRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefZoneService;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefZoneDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefZoneMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -49,6 +51,9 @@ public class RefZoneResourceIntTest {
 
     @Autowired
     private RefZoneRepository refZoneRepository;
+
+    @Autowired
+    private RefZoneMapper refZoneMapper;
 
     @Autowired
     private RefZoneService refZoneService;
@@ -108,9 +113,10 @@ public class RefZoneResourceIntTest {
         int databaseSizeBeforeCreate = refZoneRepository.findAll().size();
 
         // Create the RefZone
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(refZone);
         restRefZoneMockMvc.perform(post("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isCreated());
 
         // Validate the RefZone in the database
@@ -128,11 +134,12 @@ public class RefZoneResourceIntTest {
 
         // Create the RefZone with an existing ID
         refZone.setId(1L);
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(refZone);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefZoneMockMvc.perform(post("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefZone in the database
@@ -148,10 +155,11 @@ public class RefZoneResourceIntTest {
         refZone.setCode(null);
 
         // Create the RefZone, which fails.
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(refZone);
 
         restRefZoneMockMvc.perform(post("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefZone> refZoneList = refZoneRepository.findAll();
@@ -166,10 +174,11 @@ public class RefZoneResourceIntTest {
         refZone.setLibelle(null);
 
         // Create the RefZone, which fails.
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(refZone);
 
         restRefZoneMockMvc.perform(post("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefZone> refZoneList = refZoneRepository.findAll();
@@ -218,7 +227,7 @@ public class RefZoneResourceIntTest {
     @Transactional
     public void updateRefZone() throws Exception {
         // Initialize the database
-        refZoneService.save(refZone);
+        refZoneRepository.saveAndFlush(refZone);
 
         int databaseSizeBeforeUpdate = refZoneRepository.findAll().size();
 
@@ -229,10 +238,11 @@ public class RefZoneResourceIntTest {
         updatedRefZone
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(updatedRefZone);
 
         restRefZoneMockMvc.perform(put("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedRefZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isOk());
 
         // Validate the RefZone in the database
@@ -249,11 +259,12 @@ public class RefZoneResourceIntTest {
         int databaseSizeBeforeUpdate = refZoneRepository.findAll().size();
 
         // Create the RefZone
+        RefZoneDTO refZoneDTO = refZoneMapper.toDto(refZone);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefZoneMockMvc.perform(put("/api/ref-zones")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refZone)))
+            .content(TestUtil.convertObjectToJsonBytes(refZoneDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefZone in the database
@@ -265,7 +276,7 @@ public class RefZoneResourceIntTest {
     @Transactional
     public void deleteRefZone() throws Exception {
         // Initialize the database
-        refZoneService.save(refZone);
+        refZoneRepository.saveAndFlush(refZone);
 
         int databaseSizeBeforeDelete = refZoneRepository.findAll().size();
 
@@ -292,5 +303,28 @@ public class RefZoneResourceIntTest {
         assertThat(refZone1).isNotEqualTo(refZone2);
         refZone1.setId(null);
         assertThat(refZone1).isNotEqualTo(refZone2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(RefZoneDTO.class);
+        RefZoneDTO refZoneDTO1 = new RefZoneDTO();
+        refZoneDTO1.setId(1L);
+        RefZoneDTO refZoneDTO2 = new RefZoneDTO();
+        assertThat(refZoneDTO1).isNotEqualTo(refZoneDTO2);
+        refZoneDTO2.setId(refZoneDTO1.getId());
+        assertThat(refZoneDTO1).isEqualTo(refZoneDTO2);
+        refZoneDTO2.setId(2L);
+        assertThat(refZoneDTO1).isNotEqualTo(refZoneDTO2);
+        refZoneDTO1.setId(null);
+        assertThat(refZoneDTO1).isNotEqualTo(refZoneDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(refZoneMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(refZoneMapper.fromId(null)).isNull();
     }
 }

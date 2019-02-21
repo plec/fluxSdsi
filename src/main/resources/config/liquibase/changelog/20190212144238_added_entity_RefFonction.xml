@@ -25,19 +25,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="code_zone" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="code_fonction" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
             <column name="libelle" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="ref_type_fonction_id" type="bigint">
+            <column name="code_type_fonction_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -5,6 +5,8 @@ import fr.gouv.culture.sdsi.reseau.flux.FluxSdsiApp;
 import fr.gouv.culture.sdsi.reseau.flux.domain.RefDomaine;
 import fr.gouv.culture.sdsi.reseau.flux.repository.RefDomaineRepository;
 import fr.gouv.culture.sdsi.reseau.flux.service.RefDomaineService;
+import fr.gouv.culture.sdsi.reseau.flux.service.dto.RefDomaineDTO;
+import fr.gouv.culture.sdsi.reseau.flux.service.mapper.RefDomaineMapper;
 import fr.gouv.culture.sdsi.reseau.flux.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -49,6 +51,9 @@ public class RefDomaineResourceIntTest {
 
     @Autowired
     private RefDomaineRepository refDomaineRepository;
+
+    @Autowired
+    private RefDomaineMapper refDomaineMapper;
 
     @Autowired
     private RefDomaineService refDomaineService;
@@ -108,9 +113,10 @@ public class RefDomaineResourceIntTest {
         int databaseSizeBeforeCreate = refDomaineRepository.findAll().size();
 
         // Create the RefDomaine
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(refDomaine);
         restRefDomaineMockMvc.perform(post("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isCreated());
 
         // Validate the RefDomaine in the database
@@ -128,11 +134,12 @@ public class RefDomaineResourceIntTest {
 
         // Create the RefDomaine with an existing ID
         refDomaine.setId(1L);
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(refDomaine);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRefDomaineMockMvc.perform(post("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefDomaine in the database
@@ -148,10 +155,11 @@ public class RefDomaineResourceIntTest {
         refDomaine.setCode(null);
 
         // Create the RefDomaine, which fails.
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(refDomaine);
 
         restRefDomaineMockMvc.perform(post("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefDomaine> refDomaineList = refDomaineRepository.findAll();
@@ -166,10 +174,11 @@ public class RefDomaineResourceIntTest {
         refDomaine.setLibelle(null);
 
         // Create the RefDomaine, which fails.
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(refDomaine);
 
         restRefDomaineMockMvc.perform(post("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isBadRequest());
 
         List<RefDomaine> refDomaineList = refDomaineRepository.findAll();
@@ -218,7 +227,7 @@ public class RefDomaineResourceIntTest {
     @Transactional
     public void updateRefDomaine() throws Exception {
         // Initialize the database
-        refDomaineService.save(refDomaine);
+        refDomaineRepository.saveAndFlush(refDomaine);
 
         int databaseSizeBeforeUpdate = refDomaineRepository.findAll().size();
 
@@ -229,10 +238,11 @@ public class RefDomaineResourceIntTest {
         updatedRefDomaine
             .code(UPDATED_CODE)
             .libelle(UPDATED_LIBELLE);
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(updatedRefDomaine);
 
         restRefDomaineMockMvc.perform(put("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedRefDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isOk());
 
         // Validate the RefDomaine in the database
@@ -249,11 +259,12 @@ public class RefDomaineResourceIntTest {
         int databaseSizeBeforeUpdate = refDomaineRepository.findAll().size();
 
         // Create the RefDomaine
+        RefDomaineDTO refDomaineDTO = refDomaineMapper.toDto(refDomaine);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRefDomaineMockMvc.perform(put("/api/ref-domaines")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(refDomaine)))
+            .content(TestUtil.convertObjectToJsonBytes(refDomaineDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the RefDomaine in the database
@@ -265,7 +276,7 @@ public class RefDomaineResourceIntTest {
     @Transactional
     public void deleteRefDomaine() throws Exception {
         // Initialize the database
-        refDomaineService.save(refDomaine);
+        refDomaineRepository.saveAndFlush(refDomaine);
 
         int databaseSizeBeforeDelete = refDomaineRepository.findAll().size();
 
@@ -292,5 +303,28 @@ public class RefDomaineResourceIntTest {
         assertThat(refDomaine1).isNotEqualTo(refDomaine2);
         refDomaine1.setId(null);
         assertThat(refDomaine1).isNotEqualTo(refDomaine2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(RefDomaineDTO.class);
+        RefDomaineDTO refDomaineDTO1 = new RefDomaineDTO();
+        refDomaineDTO1.setId(1L);
+        RefDomaineDTO refDomaineDTO2 = new RefDomaineDTO();
+        assertThat(refDomaineDTO1).isNotEqualTo(refDomaineDTO2);
+        refDomaineDTO2.setId(refDomaineDTO1.getId());
+        assertThat(refDomaineDTO1).isEqualTo(refDomaineDTO2);
+        refDomaineDTO2.setId(2L);
+        assertThat(refDomaineDTO1).isNotEqualTo(refDomaineDTO2);
+        refDomaineDTO1.setId(null);
+        assertThat(refDomaineDTO1).isNotEqualTo(refDomaineDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(refDomaineMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(refDomaineMapper.fromId(null)).isNull();
     }
 }

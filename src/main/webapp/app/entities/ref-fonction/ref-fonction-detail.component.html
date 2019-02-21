@@ -9,22 +9,14 @@
                 <dd>
                     <span>{{refFonction.code}}</span>
                 </dd>
-                <dt><span>Code Zone</span></dt>
-                <dd>
-                    <span>{{refFonction.codeZone}}</span>
-                </dd>
-                <dt><span>Code Fonction</span></dt>
-                <dd>
-                    <span>{{refFonction.codeFonction}}</span>
-                </dd>
                 <dt><span>Libelle</span></dt>
                 <dd>
                     <span>{{refFonction.libelle}}</span>
                 </dd>
-                <dt><span>Ref Type Fonction</span></dt>
+                <dt><span>Code Type Fonction</span></dt>
                 <dd>
-                    <div *ngIf="refFonction.refTypeFonction">
-                        <a [routerLink]="['/ref-type-fonction', refFonction.refTypeFonction?.id, 'view']">{{refFonction.refTypeFonction?.id}}</a>
+                    <div *ngIf="refFonction.codeTypeFonctionId">
+                        <a [routerLink]="['/ref-type-fonction', refFonction.codeTypeFonctionId, 'view']">{{refFonction.codeTypeFonctionId}}</a>
                     </div>
                 </dd>
             </dl>

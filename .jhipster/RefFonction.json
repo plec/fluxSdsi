@@ -9,20 +9,6 @@
             ]
         },
         {
-            "fieldName": "codeZone",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "codeFonction",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "libelle",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -32,21 +18,16 @@
     ],
     "relationships": [
         {
-            "relationshipName": "refTypeFonction",
-            "otherEntityName": "refTypeFonction",
             "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "codeZone",
-            "otherEntityName": "refZone",
-            "otherEntityRelationshipName": "refFonction"
+            "relationshipName": "codeTypeFonction",
+            "otherEntityName": "refTypeFonction",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
         }
     ],
     "changelogDate": "20190212144238",
     "entityTableName": "ref_fonction",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

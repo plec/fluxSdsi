@@ -1,0 +1,68 @@
+{
+    "name": "RefVlan",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "codeZone",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "libelle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "demandeFlux",
+            "otherEntityRelationshipName": "destVlan"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "demandeFlux",
+            "otherEntityRelationshipName": "sourceVlan"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "refMatriceFlux",
+            "otherEntityRelationshipName": "destVlan"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "code",
+            "otherEntityName": "refMatriceFlux",
+            "otherEntityRelationshipName": "sourceVlan"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "codeZone",
+            "otherEntityName": "refZone",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "code"
+        }
+    ],
+    "changelogDate": "20190221170635",
+    "entityTableName": "ref_vlan",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

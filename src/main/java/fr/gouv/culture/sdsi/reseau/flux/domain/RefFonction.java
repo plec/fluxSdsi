@@ -1,7 +1,6 @@
 package fr.gouv.culture.sdsi.reseau.flux.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -10,8 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,24 +31,13 @@ public class RefFonction implements Serializable {
     private String code;
 
     @NotNull
-    @Column(name = "code_zone", nullable = false)
-    private String codeZone;
-
-    @NotNull
-    @Column(name = "code_fonction", nullable = false)
-    private String codeFonction;
-
-    @NotNull
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
     @ManyToOne
     @JsonIgnoreProperties("codes")
-    private RefTypeFonction refTypeFonction;
+    private RefTypeFonction codeTypeFonction;
 
-    @OneToMany(mappedBy = "refFonction")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<RefZone> codeZones = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -74,32 +60,6 @@ public class RefFonction implements Serializable {
         this.code = code;
     }
 
-    public String getCodeZone() {
-        return codeZone;
-    }
-
-    public RefFonction codeZone(String codeZone) {
-        this.codeZone = codeZone;
-        return this;
-    }
-
-    public void setCodeZone(String codeZone) {
-        this.codeZone = codeZone;
-    }
-
-    public String getCodeFonction() {
-        return codeFonction;
-    }
-
-    public RefFonction codeFonction(String codeFonction) {
-        this.codeFonction = codeFonction;
-        return this;
-    }
-
-    public void setCodeFonction(String codeFonction) {
-        this.codeFonction = codeFonction;
-    }
-
     public String getLibelle() {
         return libelle;
     }
@@ -113,42 +73,17 @@ public class RefFonction implements Serializable {
         this.libelle = libelle;
     }
 
-    public RefTypeFonction getRefTypeFonction() {
-        return refTypeFonction;
+    public RefTypeFonction getCodeTypeFonction() {
+        return codeTypeFonction;
     }
 
-    public RefFonction refTypeFonction(RefTypeFonction refTypeFonction) {
-        this.refTypeFonction = refTypeFonction;
+    public RefFonction codeTypeFonction(RefTypeFonction refTypeFonction) {
+        this.codeTypeFonction = refTypeFonction;
         return this;
     }
 
-    public void setRefTypeFonction(RefTypeFonction refTypeFonction) {
-        this.refTypeFonction = refTypeFonction;
-    }
-
-    public Set<RefZone> getCodeZones() {
-        return codeZones;
-    }
-
-    public RefFonction codeZones(Set<RefZone> refZones) {
-        this.codeZones = refZones;
-        return this;
-    }
-
-    public RefFonction addCodeZone(RefZone refZone) {
-        this.codeZones.add(refZone);
-        refZone.setRefFonction(this);
-        return this;
-    }
-
-    public RefFonction removeCodeZone(RefZone refZone) {
-        this.codeZones.remove(refZone);
-        refZone.setRefFonction(null);
-        return this;
-    }
-
-    public void setCodeZones(Set<RefZone> refZones) {
-        this.codeZones = refZones;
+    public void setCodeTypeFonction(RefTypeFonction refTypeFonction) {
+        this.codeTypeFonction = refTypeFonction;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -177,8 +112,6 @@ public class RefFonction implements Serializable {
         return "RefFonction{" +
             "id=" + getId() +
             ", code='" + getCode() + "'" +
-            ", codeZone='" + getCodeZone() + "'" +
-            ", codeFonction='" + getCodeFonction() + "'" +
             ", libelle='" + getLibelle() + "'" +
             "}";
     }

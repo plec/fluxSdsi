@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="refVlan">
+            <h2><span>Ref Vlan</span> {{refVlan.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{refVlan.code}}</span>
+                </dd>
+                <dt><span>Code Zone</span></dt>
+                <dd>
+                    <span>{{refVlan.codeZone}}</span>
+                </dd>
+                <dt><span>Libelle</span></dt>
+                <dd>
+                    <span>{{refVlan.libelle}}</span>
+                </dd>
+                <dt><span>Code Zone</span></dt>
+                <dd>
+                    <div *ngIf="refVlan.codeZoneId">
+                        <a [routerLink]="['/ref-zone', refVlan.codeZoneId, 'view']">{{refVlan.codeZoneId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/ref-vlan', refVlan.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
