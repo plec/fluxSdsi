@@ -1,0 +1,99 @@
+
+
+entity RefEnvironement {
+	code String required,
+    libelle String required
+}
+
+entity RefSite {
+	code String required,
+    libelle String required
+}
+entity RefVlan {
+	code String required,
+    codeZone String required,
+    libelle String required
+}
+
+entity RefDomaine {
+	code String required,
+    libelle String required
+}
+entity RefTypeFlux {
+	code String required,
+    libelle String required
+}
+entity RefTypeFonction {
+	code String required,
+    libelle String required
+}
+entity RefFonction {
+	code String required,
+    libelle String required
+}
+entity RefZone {
+	code String required,
+    libelle String required
+}
+entity RefNumero {
+	code String required,
+    libelle String required
+}
+
+entity DemandeFlux {
+    environnement String required,
+    typeFlux String required,
+    sourceIP String required,
+    sourcePort String,
+    sourceVlan String required,
+    destIP String required,
+    destPort String,
+    destVlan String required,
+}
+
+entity RefTypeAuthorisation {
+	code String required,
+    libelle String required
+}
+entity RefMatriceFlux {
+    environnement String required,
+    typeFlux String required,
+    sourceVlan String required,
+    port String required,
+    destVlan String required,
+    typeAuthorisation String required
+}
+
+relationship OneToMany {
+	RefEnvironement{code} to DemandeFlux{environnement}
+}
+relationship OneToMany {
+	RefTypeFonction{code} to RefFonction{codeTypeFonction}
+}
+relationship OneToMany {
+	RefVlan{code} to DemandeFlux{destVlan}
+}
+relationship OneToMany {
+	RefVlan{code} to DemandeFlux{sourceVlan}
+}
+relationship OneToMany {
+	RefVlan{code} to RefMatriceFlux{destVlan}
+}
+relationship OneToMany {
+	RefVlan{code} to RefMatriceFlux{sourceVlan}
+}
+relationship OneToMany {
+	RefZone{code} to RefVlan{codeZone}
+}
+
+relationship OneToMany {
+	RefTypeFlux{code} to DemandeFlux{typeFlux}
+}
+relationship OneToMany {
+	RefTypeAuthorisation{code} to RefMatriceFlux{typeAuthorisation}
+}
+
+paginate * with pagination
+service * with serviceImpl
+dto * with mapstruct
+
